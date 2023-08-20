@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('year')->nullable();
             $table->decimal('rating')->default(0);
             $table->string('description')->nullable();
+            $table->foreignId('category_id')->constrained();
             $table->timestamps();
         });
     }

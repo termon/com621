@@ -31,6 +31,7 @@
                     <th class="px-2 py-3">Title</th>
                     <th class="px-2 py-3">Author</th>
                     <th class="px-2 py-3">Year</th>
+                    <th class="px-2 py-3">Category</th>
                     <th class="px-2 py-3 text-right">Actions</th>
                 </tr>
             </thead>
@@ -41,6 +42,7 @@
                         <td class="px-2 py-3">{{$book->title}}</td>
                         <td class="px-2 py-3">{{$book->author}}</td>
                         <td class="px-2 py-3">{{$book->year}}</td>
+                        <td class="px-2 py-3">{{$book->category->name}}</td>
                         <td class="px-2 py-3 text-right flex gap-2 justify-end">
                             <a href="{{ route('books.edit',['id' => $book->id])}}">
                                 <x-svg.edit/> 

@@ -12,7 +12,11 @@
 
     <x-base.card>
         <!-- title -->
-        <x-slot:title>Book</x-slot:title>
+        <x-slot:title>
+            <span>Book</span>
+            <x-base.badge>{{ $book->category->name }}</x-base.badge>
+
+        </x-slot:title>
 
         <!-- Title and Year -->   
         <div>

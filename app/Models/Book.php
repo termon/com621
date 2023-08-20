@@ -17,9 +17,8 @@ class Book extends Model
 
     public $guarded = [ 'id' ];
 
-
-
-   
+    protected $with = ['category'];
+ 
     // event closures registered in static model booted function
     public static function boot()
     {
@@ -34,4 +33,10 @@ class Book extends Model
         });
     }
 
+
+    public function category() 
+    {
+        return $this->belongsTo(Category::class);
+    }
+    
 }
