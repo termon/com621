@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->string('slug')->unique();
+            $table->string('author');
             $table->integer('year')->nullable();
             $table->decimal('rating')->default(0);
             $table->string('description')->nullable();

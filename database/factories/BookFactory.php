@@ -20,6 +20,7 @@ class BookFactory extends Factory
         $title = fake()->sentence(3);
         return [
             'title' => $title,
+            'author' => fake()->name(),
             'slug' => str($title)->slug(),            
             'year' => fake()->numberBetween(2010,2023),
             'rating' => fake()->numberBetween(0,5),
