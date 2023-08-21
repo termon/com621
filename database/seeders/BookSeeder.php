@@ -19,6 +19,7 @@ class BookSeeder extends Seeder
         $c1 = Category::create(['name' => "Fiction"]);
         $c2 = Category::create(['name' => "Technology"]);
         $c3 = Category::create(['name' => "Horror"]);
+        $c4 = Category::create(['name' => "Miscellaneous"]);
         
         $b1 = Book::create([
             'title' => 'HTML5',
@@ -71,6 +72,8 @@ class BookSeeder extends Seeder
             'rating' => 4.5,
             'description' => "A horror book."
         ]);
+
+        Book::factory()->count(100)->create([ 'category_id' => $c4->id]);
         
     }
 }

@@ -28,7 +28,7 @@ class BookRepository
         return Book::all();
     }
 
-    public function allPaged(int $pageSize = 10, ?string $search='') //: Collection
+    public function paged(int $pageSize = 10, ?string $search='') //: Collection
     {
         if ($search != '')
         {

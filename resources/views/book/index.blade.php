@@ -25,6 +25,13 @@
             <x-base.link href="{{ route('books.create')}}" type="dark">Create</x-base.link>
         </x-slot:title>
       
+       
+        <form method="GET" action="{{route('books.index')}}" class="flex gap-2 items-center">
+            <x-form.input name="search" value="{{$search}}" class="text-xs" />
+            <x-base.button type="yellow" class="text-xs">Search</x-base.button>
+            <x-base.link   type="light" class="text-xs" href="{{route('books.index')}}">Clear</x-base.link>
+        </form>           
+       
         <table class="min-w-full text-left">
             <thead>
                 <tr class="border-b border-gray-300 uppercase text-sm">
@@ -58,11 +65,36 @@
                     </tr>
                 @endforeach
             </tbody>
-        </table>   
+        </table> 
         
-        {{-- <x-slot:footer class="flex justify-end">
-
-        </x-slot:footer> --}}
+        {{-- <x-table>
+            <x-slot:thead class="bg-red-50">
+                <x-table.tr>
+                    <x-table.th>Title</x-table.th>
+                    <x-table.th>Author</x-table.th>
+                    <x-table.th>Year</x-table.th>
+                    <x-table.th class="text-right">Actions</x-table.th>
+                </x-table.tr>
+            </x-slot:thead>
+    
+            <x-slot:tbody>
+                @foreach ($books as $book )
+                    <x-table.tr>
+                        <x-table.td>{{$book->title}}</x-table.td>
+                        <x-table.td>{{$book->author}}</x-table.td>
+                        <x-table.td>{{$book->year}}</x-table.td>
+                        <x-table.td class="text-right">
+                            <x-link href="/books/{{$book->id}}" type="light" class="text-xs mr-2">View</x-link>
+                            <x-link href="/books/{{$book->id}}/edit" type="light"  class="text-xs">Edit</x-link>
+                        </x-table.td>
+                    </x-table.tr>
+                @endforeach
+            </x-slot:tbody>
+        </x-table> --}}
+        
+        <x-slot:footer class="flex justify-end">
+            {{ $books->links() }}
+        </x-slot:footer>
     </x-base.card>
 
 </x-layout>

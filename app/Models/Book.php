@@ -38,5 +38,16 @@ class Book extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function scopeSearch($query, $value) {
+        if ($value) {
+            // required use of table name qualifier to prevent ambiguous id column in where clause
+            return $query->where('title', 'like',  "%{$value}%")
+                         ->orWhere('author','like',  "%{$value}%")
+                         ->orWhere('description','like',  "%{$value}%");
+                   
+        }
+        return $query;
+    }
     
 }

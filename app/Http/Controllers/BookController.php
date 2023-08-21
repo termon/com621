@@ -11,10 +11,12 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::all();
-        return view('book.index', ['books' => $books]);
+        $search = $request->input("search");
+       
+        $books = Book::search($search)->paginate(20); //all();
+        return view('book.index', ['books' => $books, "search" => $search]);
     }
 
     /**

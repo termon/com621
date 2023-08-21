@@ -1,5 +1,22 @@
+{{-- Raw
+<div class="mb-4">
+    <label for="title" class="block text-gray-700 text-sm font-bold mb-2 uppercase">Title</label>
+    <input id="title" name="title" value="{{ old('title',$book->title) }}" class="border rounded-md w-full py-2.5 text-gray-700 leading-tight focus:ring-blue-500 focus:border-blue-500" >
+    @error('title')
+        <div class="text-sm text-red-500 mt-2">{{ $message }}</div>
+    @enderror
+</div>  
+--}}
 
-<x-form.input-group label="Title" name="title" value="{{ $book->title }}" class=""/>
+{{-- Using components
+<div class="mb-4">
+    <x-form.label for="title">Title</x-form.label>
+    <x-form.input name="title"  value="{{ $book->title }}" /> 
+    <x-form.error name="title" />
+</div> --}}
+
+{{-- Using component groups --}}
+<x-form.input-group label="Title" name="title" value="{{ $book->title }}" />
 
 <x-form.input-group label="Author" name="author" value="{{ $book->author }}" class=""/>
 
