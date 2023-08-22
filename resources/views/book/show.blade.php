@@ -26,8 +26,8 @@
     
         <!-- author and rating -->
         <div class="my-2">
-            <x-base.badge type="yellow">{{ $book->author }}</x-base.badge>
-            <x-base.badge type="green">{{ $book->rating }}</x-base.badge>
+            <x-base.badge mode="yellow">{{ $book->author }}</x-base.badge>
+            <x-base.badge mode="green">{{ $book->rating }}</x-base.badge>
         </div>
 
         <!-- description -->
@@ -42,7 +42,7 @@
                 {{-- <form method="POST" action="/books/{{$book->id}}" class="m-0">
                     @csrf()
                     @method('DELETE')
-                    <x-base.button type="submit" type="danger">Delete</x-base.button>   
+                    <x-base.button type="submit" mode="danger">Delete</x-base.button>   
                 </form> --}}
                
                 <!-- edit -->

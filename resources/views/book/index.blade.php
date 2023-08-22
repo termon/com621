@@ -22,14 +22,14 @@
 
         <x-slot:title class="flex justify-between items-center">
             <span>Books</span>
-            <x-base.link href="{{ route('books.create')}}" type="dark">Create</x-base.link>
+            <x-base.link href="{{ route('books.create')}}" mode="dark">Create</x-base.link>
         </x-slot:title>
       
        
         <form method="GET" action="{{route('books.index')}}" class="flex gap-2 items-center">
             <x-form.input name="search" value="{{$search}}" class="text-xs" />          
-            <x-base.button type="yellow" class="text-xs">Search</x-base.button>
-            <x-base.link   type="light" class="text-xs" href="{{route('books.index')}}">Clear</x-base.link>
+            <x-base.button mode="yellow" class="text-xs">Search</x-base.button>
+            <x-base.link   mode="light" class="text-xs" href="{{route('books.index')}}">Clear</x-base.link>
         </form>                   
        
         <table class="min-w-full text-left">
@@ -84,8 +84,8 @@
                         <x-table.td>{{$book->author}}</x-table.td>
                         <x-table.td>{{$book->year}}</x-table.td>
                         <x-table.td class="text-right">
-                            <x-link href="/books/{{$book->id}}" type="light" class="text-xs mr-2">View</x-link>
-                            <x-link href="/books/{{$book->id}}/edit" type="light"  class="text-xs">Edit</x-link>
+                            <x-link href="/books/{{$book->id}}" mode="light" class="text-xs mr-2">View</x-link>
+                            <x-link href="/books/{{$book->id}}/edit" mode="light"  class="text-xs">Edit</x-link>
                         </x-table.td>
                     </x-table.tr>
                 @endforeach

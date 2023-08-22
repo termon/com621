@@ -1,4 +1,4 @@
-<x-base.link type="link" x-data="" class="flex gap-2 items-center"
+<x-base.link mode="link" x-data="" class="flex gap-2 items-center"
     x-on:click.prevent="$dispatch('open-modal', 'confirm-book-deletion')">
   <span>Delete</span><x-svg.trash class=""></x-svg.trash>
 </x-base.link>
@@ -13,8 +13,8 @@
         </h2>
 
         <div class="mt-6 flex justify-end">
-            <x-base.link type="light" x-on:click="$dispatch('close')">Cancel</x-base.link>
-            <x-base.button class="ml-3" type="red">Delete</x-base.button>
+            <x-base.link mode="light" x-on:click="$dispatch('close')">Cancel</x-base.link>
+            <x-base.button class="ml-3" mode="red">Delete</x-base.button>
         </div>
     </form>
 </x-base.modal>

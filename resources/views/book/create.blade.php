@@ -15,8 +15,8 @@
                 @include("book._inputs")
 
                 <div class="flex items-center gap-2 mt-2">
-                    <x-base.button type="dark">Create</x-base.button>             
-                    <x-base.link type="light" href="{{ route('books.index') }}">Cancel</x-base.link>
+                    <x-base.button mode="dark">Create</x-base.button>             
+                    <x-base.link mode="light" href="{{ route('books.index') }}">Cancel</x-base.link>
                 </div>
                 
             </div>
