@@ -15,6 +15,9 @@
     <x-form.error name="title" />
 </div> --}}
 
+{{-- Id required in UpdateFormRequest validation when verifying book title is unique --}}
+<input name="id" type="hidden" value={{$book->id}}>
+
 {{-- Using component groups --}}
 <x-form.input-group label="Title" name="title" value="{{ $book->title }}" />
 
@@ -26,4 +29,6 @@
     <x-form.input-group label="Rating" name="rating" type="number" step="0.1" value="{{ $book->rating }}" class="flex-1 "/>
 </div>
 
+<x-form.select-group label="Category" name="category_id" :options="$categories" value="{{ $book->category_id }}"/>
+    
 <x-form.textarea-group label="Description" name="description" rows="8" value="{{ $book->description }}" class=""/>

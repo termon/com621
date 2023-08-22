@@ -27,10 +27,10 @@
       
        
         <form method="GET" action="{{route('books.index')}}" class="flex gap-2 items-center">
-            <x-form.input name="search" value="{{$search}}" class="text-xs" />
+            <x-form.input name="search" value="{{$search}}" class="text-xs" />          
             <x-base.button type="yellow" class="text-xs">Search</x-base.button>
             <x-base.link   type="light" class="text-xs" href="{{route('books.index')}}">Clear</x-base.link>
-        </form>           
+        </form>                   
        
         <table class="min-w-full text-left">
             <thead>

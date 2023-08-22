@@ -24,7 +24,7 @@ class BookFactory extends Factory
             'slug' => str($title)->slug(),            
             'year' => fake()->numberBetween(2010,2023),
             'rating' => fake()->numberBetween(0,5),
-            'description' => Str::random(500),
+            'description' => fake()->words(50, true),
         ];
     }
 }

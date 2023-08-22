@@ -3,45 +3,38 @@
 namespace App\Repositories;
 
 use App\Models\Book;
-use App\Models\BookData;
-
 use App\Models\Review;
-use App\Models\ReviewData;
 
 use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookRepository
 {
 
     public function create(array $data): ?Book
-    {
+    {        
         return Book::create($data);
     }
-
-    public function all(?string $search='') //: Collection
+    
+    public function all(?string $search='') : Collection
     {
-        if ($search != '')
-        {
-            return Book::where('title', 'like', '%'.$search.'%')
-                        ->orWhere('author', 'like', '%'.$search.'%' );
-        }
-        return Book::all();
+        return match($search) {
+            '', null => Book::all(),
+            default  => Book::search($search)
+        };
     }
 
-    public function paged(int $pageSize = 10, ?string $search='') //: Collection
+    public function paginate(int $pageSize = 10, ?string $search=null) : LengthAwarePaginator
     {
-        if ($search != '')
-        {
-            return Book::where('title', 'like', '%'.$search.'%')
-                ->orWhere('author', 'like', '%'.$search.'%' )
-                ->paginate($pageSize);
-        }
-        return Book::paginate($pageSize);
+        return match($search) {
+            '',null => Book::paginate($pageSize),
+            default => Book::search($search)->paginate($pageSize), 
+        };
     }
 
     public function find(int $id): ?Book
     {
-        return Book::with('reviews')->find($id);
+        return Book::find($id);
     }
 
     public function delete(int $id): bool
@@ -70,40 +63,6 @@ class BookRepository
             return $book;
         }
         return null;
-    }
-
-
-    public function findReview(int $id): ?Review
-    {
-        return Review::with('book')->find($id);
-    }
-
-    public function addReview(int $bookId,array $data): ?Review
-    {
-        $book = $this->find($bookId);
-        $review =  $book->reviews()->create($data);
-        $book->rating = $book->reviews()->avg('rating');
-        $book->save();
-        return $review;
-    }
-
-    public function addReviews(int $bookId, array $data): ?Book
-    {
-        $book = $this->find($bookId);
-        $book->reviews()->createMany($data);
-        $book->rating = $book->reviews()->avg('rating') ?? 0;
-        $book->save();
-        return $book;
-    }
-
-    public function deleteReview(int $reviewId): bool
-    {
-        $review = Review::with('book')->find($reviewId);
-        $book = $review->book;
-        $review->delete();
-        $book->rating = $book->reviews()->avg('rating') ?? 0;
-        $book->save();
-        return true;
     }
 
 }
