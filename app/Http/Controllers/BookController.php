@@ -52,7 +52,7 @@ class BookController extends Controller
         // Book::create($book);
         $book = $this->repo->create($request->validated());
 
-        return redirect()->route("books.index")->with('info', "Book Created Successfully");  
+        return redirect()->route("books.index")->with('success', "Book Created Successfully");  
     }
 
     /**

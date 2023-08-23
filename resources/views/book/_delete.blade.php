@@ -1,4 +1,4 @@
-<x-base.link mode="link" x-data="" class="flex gap-2 items-center"
+<x-base.link x-data="" class="flex gap-2"
     x-on:click.prevent="$dispatch('open-modal', 'confirm-book-deletion')">
   <span>Delete</span><x-svg.trash class=""></x-svg.trash>
 </x-base.link>
