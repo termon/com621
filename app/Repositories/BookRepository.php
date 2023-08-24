@@ -19,6 +19,7 @@ class BookRepository
     public function all(?string $search='') : Collection
     {
         return match($search) {
+            //'', null => Book::with(['category'])->get(), // use when Book $with property not set 
             '', null => Book::all(),
             default  => Book::search($search)
         };

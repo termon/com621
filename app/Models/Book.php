@@ -19,6 +19,11 @@ class Book extends Model
 
     protected $with = ['category'];
  
+    public function category() : BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     // event closures registered in static model booted function
     public static function boot()
     {
@@ -29,25 +34,35 @@ class Book extends Model
         });
 
         static::updating(function($book) {            
-            $book->slug = str($book->title)->slug()->toString();          
+            $book->slug = str($book->title)->slug();          
         });
     }
 
-
-    public function category() 
-    {
-        return $this->belongsTo(Category::class);
-    }
-
+    // model search scope
     public function scopeSearch($query, $value) {
         return match($value) {
             $value => $query                            
-                            ->where('title', 'like',  "%{$value}%")
-                            ->orWhere('author','like',  "%{$value}%")
-                            ->orWhere('description','like',  "%{$value}%")
-                            ->orWhereHas('category', fn ($q) => $q->where('name', 'like', "%{$value}%")),                            
+                ->where('title', 'like',  "%{$value}%")
+                ->orWhere('author','like',  "%{$value}%")
+                ->orWhere('description','like',  "%{$value}%")
+                ->orWhereHas('category', fn ($q) => $q->where('name', 'like', "%{$value}%")),
             default => $query
         };        
     }
-    
+
+    public function demo() {
+        $book = Book::create([
+            'title' => 'Dummys Guide to HTML5',
+            'author' => 'J. Smith',          
+            'year' => 2022,
+            'rating' => 3.0,
+            'category_id' => Category::find(1)->id,
+            'description' => "HTML5 provides..."
+        ]);
+        echo "Title: {$book->title} Slug: {$book->slug}\n";
+        $book->title = "The Dummys Guide to HTML5";
+        $book->update();
+        echo "Title: {$book->title} Slug: {$book->slug}\n";
+
+    }
 }

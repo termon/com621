@@ -1,6 +1,6 @@
-@props(['type' => 'link'])
+@props(['mode' => 'link'])
 @php 
-$classes = match($type) {
+$classes = match($mode) {
    'blue'   => "py-1.5 px-4 text-sm transition-colors font-medium rounded-lg text-gray-100 bg-blue-700   border border-blue-800   hover:bg-blue-900   hover:text-white disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-900   active:bg-blue-800",
    'red'    => "py-1.5 px-4 text-sm transition-colors font-medium rounded-lg text-gray-100 bg-red-700    border border-red-800    hover:bg-red-800    hover:text-white disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-red-900    active:bg-red-800",
    'green'  => "py-1.5 px-4 text-sm transition-colors font-medium rounded-lg text-gray-100 bg-green-700  border border-green-800  hover:bg-green-800  hover:text-white disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-green-900  active:bg-green-900",
