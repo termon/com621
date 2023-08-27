@@ -32,6 +32,14 @@ class Review extends Model
         );
     }
 
+    protected function Name(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value, $attributes) => trim($value),
+            get: fn ($value, $attributes) => ucwords($value), 
+        );
+    }
+
     protected function ShortComment(): Attribute
     {
         return Attribute::make(
