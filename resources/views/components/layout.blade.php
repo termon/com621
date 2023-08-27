@@ -7,11 +7,25 @@
 
   <body class="flex flex-col justify-center h-screen">
 
-    <nav class="bg-gray-50 px-4 py-2 flex gap-6 border-b">       
-      <a class="text-blue-500 hover:text-blue-900 border-b-2 border-transparent hover:border-black" href="{{ route("home")}}">Home</a>
-      <a class="text-blue-500 hover:text-blue-900 border-b-2 border-transparent hover:border-black" href="{{ route("about")}}">About</a>
-      <a class="text-blue-500 hover:text-blue-900 border-b-2 border-transparent hover:border-black" href="{{ route("books.index")}}">Books</a>
-    </nav>        
+    <x-nav>
+      <x-nav.item href="{{route('home')}}">Home</x-nav.item> 
+      <x-nav.item href="{{route('about')}}">About</x-nav.item>     
+      <x-nav.item href="{{route('books.index')}}">Books</x-nav.item> 
+   
+      <x-nav.drop title="NavDropdown 1">
+        <x-nav.drop.item href="{{ route('books.index')}}">Books</x-nav.drop.item>
+        <x-nav.drop.item href="#">Dummy 1</x-nav.drop.item>
+        <x-nav.drop.item href="#">Dummy 2</x-nav.drop.item>
+      </x-nav.drop>
+
+      <x-nav.drop title="Dropdown 2">
+        <div>
+          <x-nav.drop.item href="{{ route('books.index')}}">Books</x-nav.drop.item>
+          <x-nav.drop.item href="{{ route('about')}}">About</x-nav.drop.item>  
+        </div>
+        <x-nav.drop.item href="{{ route('home')}}">Home</x-nav.drop.item>
+      </x-nav.drop>
+    </x-nav>
 
     <!-- Display flash message -->
     <x-base.flash />

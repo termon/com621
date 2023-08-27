@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Book extends Model
 {
@@ -19,6 +16,11 @@ class Book extends Model
 
     protected $with = ['category'];
  
+
+    public function reviews() : HasMany {
+        return $this->hasMany(Review::class);
+    }
+    
     public function category() : BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -50,19 +52,4 @@ class Book extends Model
         };        
     }
 
-    public function demo() {
-        $book = Book::create([
-            'title' => 'Dummys Guide to HTML5',
-            'author' => 'J. Smith',          
-            'year' => 2022,
-            'rating' => 3.0,
-            'category_id' => Category::find(1)->id,
-            'description' => "HTML5 provides..."
-        ]);
-        echo "Title: {$book->title} Slug: {$book->slug}\n";
-        $book->title = "The Dummys Guide to HTML5";
-        $book->update();
-        echo "Title: {$book->title} Slug: {$book->slug}\n";
-
-    }
 }

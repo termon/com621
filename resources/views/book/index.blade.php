@@ -22,7 +22,10 @@
 
         <x-slot:title class="flex justify-between items-center">
             <span>Books</span>
-            <x-base.link href="{{ route('books.create')}}" mode="dark">Create</x-base.link>
+            
+            <x-base.link href="{{route('books.create')}}" class="flex gap-1">
+                <x-svg.plus/><span>Create</span>
+            </x-base.link>
         </x-slot:title>
       
        
@@ -51,16 +54,11 @@
                         <td class="px-2 py-3">{{$book->year}}</td>
                         <td class="px-2 py-3">{{$book->category->name}}</td>
                         <td class="px-2 py-3 text-right flex gap-2 justify-end">
-                            <a href="{{ route('books.edit',['id' => $book->id])}}">
-                                <x-svg.edit/> 
-                            </a>
-                             
-                            <a href="{{ route ('books.show',['id' => $book->id]) }}">
-                                <x-svg.eye/>
-                            </a>                            
+                            <a href="{{ route('books.edit',['id' => $book->id])}}"><x-svg.edit/></a>     
+                            <a href="{{ route ('books.show',['id' => $book->id]) }}"><x-svg.eye/></a>                            
 
                             {{-- <a href="{{ route('books.edit',['id' => $book->id])}}"  class="hover:text-blue-900 hover:underline text-blue-700"> Edit </a> --}}                             
-                            {{-- <a href="{{ route ('books.show',['id' => $book->id]) }}" class="hover:text-blue-900 hover:underline text-blue-700 mr-2">View</a>                             --}}
+                            {{-- <a href="{{ route ('books.show',['id' => $book->id]) }}" class="hover:text-blue-900 hover:underline text-blue-700 mr-2">View</a> --}}
                         </td>
                     </tr>
                 @endforeach

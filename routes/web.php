@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 
@@ -26,6 +27,13 @@ Route::get("/books/{id}/edit", [BookController::class, "edit"])->name("books.edi
 Route::put("/books/{id}",      [BookController::class, "update"])->name("books.update");
 Route::get("/books/{id}",      [BookController::class, "show"])->name("books.show");
 Route::delete("/books/{id}",   [BookController::class, "destroy"])->name("books.destroy");
+Route::post("/books",          [BookController::class, "store"])->name("books.store"); 
+
+Route::get("/reviews/create/{id}", [ReviewController::class, "create"])->name("reviews.create"); 
+Route::post("/reviews",            [ReviewController::class, "store"])->name("reviews.store"); 
+
+Route::get("/reviews/{review}",    [ReviewController::class, "show"])->name("reviews.show"); 
+Route::delete("/reviews/{review}", [ReviewController::class, "destroy"])->name("reviews.destroy");
 
 //Route::resource('books', BookController::class);
 

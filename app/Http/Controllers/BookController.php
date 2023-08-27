@@ -21,7 +21,7 @@ class BookController extends Controller
     {
         $search = $request->input("search");
        
-        $books = $this->repo->paginate(20, $search);
+        $books = $this->repo->paginate(10, $search);
         //$books = Book::search($search)->paginate(20); //all();
         return view('book.index', ['books' => $books, "search" => $search ]);
     }
