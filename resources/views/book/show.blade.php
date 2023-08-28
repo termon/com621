@@ -25,7 +25,7 @@
                 <h2 class="text-lg font-bold leading-tight">{{$book->title}}</h2>
                 <span>by</span>
                 <h3 class="text-green-800 font-semibold">{{ $book->author }}</h3>
-                <x-base.badge mode="pink">{{$book->rating}}</x-base.badge>
+                <x-base.badge mode="pink">{{$book->rating_formatted}}</x-base.badge>
             </div>
 
             <div class="text-blue-800 font-bold">{{$book->year}}</div>

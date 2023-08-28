@@ -35,13 +35,13 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge(['reviewed_on' => now()]);
+        //$request->merge(['reviewed_on' => now()]);
         $review = $request->validate([
             'book_id' => ['required'],
             'name' => ['required'],            
             'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'comment' => ['required','min:5', 'max:1000'],
-            'reviewed_on' => ['required']
+            //'reviewed_on' => ['required']
         ]);
         
         Review::create($review);
@@ -81,7 +81,6 @@ class ReviewController extends Controller
        $book_id = $review->book_id;
 
        $review->delete();
-       return view('home.about')->with('success', "Review Destroyed Successfully");
-       //return redirect()->route("books.show", ['id'=>$book_id])->with('success', "Review Destroyed Successfully");
+       return redirect()->route("books.show", ['id'=>$book_id])->with('success', "Review Destroyed Successfully");
     }
 }

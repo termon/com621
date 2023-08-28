@@ -16,14 +16,16 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
+        $a1 = Author::create(['name' => 'J .Bloggs' ]);
+        $a2 = Author::create(['name' => 'A .Dummy' ]);
+
         $c1 = Category::create(['name' => "Fiction"]);
         $c2 = Category::create(['name' => "Technology"]);
         $c3 = Category::create(['name' => "Horror"]);
         $c4 = Category::create(['name' => "Miscellaneous"]);
         
         $b1 = Book::create([
-            'title' => 'HTML5',
-            'author' => 'J. Smith',
+            'title' => 'HTML5',            
             'slug' => str('HTML5')->slug(),
             'year' => 2022,
             'rating' => 3.0,
@@ -33,10 +35,10 @@ class BookSeeder extends Seeder
         $b1->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b1->id])->toArray()      
         );
+        $b1->authors()->create([$a1]);
 
         $b2 = Book::create([
             'title' => 'CSS3',
-            'author' => 'A. Other',
             'slug' => str('CSS3')->slug(),
             'year' => 2022,
             'category_id' => $c2->id,
@@ -46,11 +48,10 @@ class BookSeeder extends Seeder
         $b2->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b2->id])->toArray()      
         );
-       
+        //$b2->authors()->create([$a1]);
 
         $b3 = Book::create([
-            'title' => 'PHP8',
-            'author' => 'J. Smith',
+            'title' => 'PHP8',            
             'slug' => str('PHP8')->slug(),
             'year' => 2023,
             'category_id' => $c2->id,
@@ -60,10 +61,10 @@ class BookSeeder extends Seeder
         $b3->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b3->id])->toArray()      
         );
-        
+        //$b3->authors()->create([$a1]);
+   
         $b4 = Book::create([
             'title' => 'Sample Fiction',
-            'author' => 'J. Smith',
             'slug' => str('Sample Fiction')->slug(),
             'year' => 2020,
             'category_id' => $c1->id,
@@ -73,10 +74,11 @@ class BookSeeder extends Seeder
         $b4->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b4->id])->toArray()      
         );
+        //$b4->authors()->create([$a1]);
+
 
         $b5 = Book::create([
             'title' => 'Sample Horror',
-            'author' => 'J. Sod',
             'slug' => str('Sample Horror')->slug(),
             'year' => 2021,
             'category_id' => $c3->id,
@@ -86,8 +88,10 @@ class BookSeeder extends Seeder
         $b5->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b5->id])->toArray()      
         );
+        //$b5->authors()->create([$a1]);
 
-        Book::factory()->count(100)->create([ 'category_id' => $c4->id]);
+
+       // Book::factory()->count(100)->create([ 'category_id' => $c4->id]);
         
     }
 }
