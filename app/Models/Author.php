@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Author extends Model
 {
@@ -13,8 +13,9 @@ class Author extends Model
     public $guarded = [ 'id' ];
 
     // relationship
-    public function books() : HasMany {
-        return $this->hasMany(Book::class);
+    public function books(): BelongsToMany
+    {
+        return $this->belongsToMany(Book::class);
     }
 
 }

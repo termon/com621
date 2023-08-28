@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Book extends Model
 {
@@ -35,8 +36,9 @@ class Book extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function authors() : HasMany {
-        return $this->hasMany(Author::class);
+    public function authors(): BelongsToMany
+    {
+        return $this->belongsToMany(Author::class);
     }
 
     // event closures registered in static model booted function

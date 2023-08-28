@@ -32,11 +32,13 @@ class BookSeeder extends Seeder
             'category_id' => $c2->id,
             'description' => "HTML5 provides the breadth of information you'll need to start creating the next generation of HTML5 websites. It covers all the base knowledge required for standards-compliant, semantic, modern website creation. It also covers the full HTML5 ecosystem and the associated APIs that complement the core HTML5 language. It begins by tackling the basics of HTML5, ensuring that you know best practices and key uses of all of the important elements, including those new to HTML5. This section also covers extended usage of CSS3, JavaScript, and DOM manipulation, making you proficient in all core aspects of modern website creation."
         ]);
+        //$b1->reviews()->saveMany(Review::factory()->count(5)->make());
         $b1->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b1->id])->toArray()      
-        );
-        $b1->authors()->create([$a1]);
+        );       
+        $b1->authors()->saveMany([$a1]);
 
+       
         $b2 = Book::create([
             'title' => 'CSS3',
             'slug' => str('CSS3')->slug(),
@@ -48,7 +50,7 @@ class BookSeeder extends Seeder
         $b2->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b2->id])->toArray()      
         );
-        //$b2->authors()->create([$a1]);
+        $b2->authors()->saveMany([$a1]);
 
         $b3 = Book::create([
             'title' => 'PHP8',            
@@ -61,7 +63,7 @@ class BookSeeder extends Seeder
         $b3->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b3->id])->toArray()      
         );
-        //$b3->authors()->create([$a1]);
+        $b3->authors()->saveMany([$a1]);
    
         $b4 = Book::create([
             'title' => 'Sample Fiction',
@@ -74,8 +76,7 @@ class BookSeeder extends Seeder
         $b4->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b4->id])->toArray()      
         );
-        //$b4->authors()->create([$a1]);
-
+        $b4->authors()->saveMany([$a1]);
 
         $b5 = Book::create([
             'title' => 'Sample Horror',
@@ -88,7 +89,7 @@ class BookSeeder extends Seeder
         $b5->reviews()->createMany(	    
             Review::factory()->count(fake()->numberBetween(0,20))->make(['book_id'=>$b5->id])->toArray()      
         );
-        //$b5->authors()->create([$a1]);
+        $b5->authors()->saveMany([$a1]);
 
 
        // Book::factory()->count(100)->create([ 'category_id' => $c4->id]);
