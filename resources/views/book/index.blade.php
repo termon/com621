@@ -1,8 +1,6 @@
 <x-layout>
     <x-slot:title>Books</x-slot:title>
 
-    {{-- <x-breadcrumbs :crumbs="['Home'=>route('home'),'Books'=>route('books.index')]" class="my-3"/> --}}
-
     <x-ui.breadcrumb class="my-3" :crumbs="[
             'Home' => route('home'), 
             'Books' => ''
