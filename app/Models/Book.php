@@ -18,11 +18,11 @@ class Book extends Model
 
     protected $with = ['category'];
  
-    // accessor to format rating to 1 decimal place
-    protected function RatingFormatted(): Attribute
+    // mutator to store rating to 1 decimal place
+    protected function Rating(): Attribute
     {
         return Attribute::make(           
-            get: fn ($value, $attributes) => number_format($attributes['rating'],1), 
+            set: fn ($value, $attributes) => round($value,1), 
         );
     }
 

@@ -24,8 +24,15 @@
             <div class="flex gap-2 items-center">
                 <h2 class="text-lg font-bold leading-tight">{{$book->title}}</h2>
                 <span>by</span>
-                <h3 class="text-green-800 font-semibold">{{ $book->author }}</h3>
-                <x-base.badge mode="pink">{{$book->rating_formatted}}</x-base.badge>
+                <div class="flex gap-1">   
+                    @forelse ($book->authors as $author )
+                        <h3 class="text-green-800 font-semibold">{{ $author->name }}, </h3>    
+                    @empty
+                        <h3 class="text-red-800 font-semibold">Unknown</h3>    
+                    @endforelse
+                </div>
+                
+                <x-base.badge mode="pink">{{$book->rating}}</x-base.badge>
             </div>
 
             <div class="text-blue-800 font-bold">{{$book->year}}</div>
@@ -52,9 +59,14 @@
     </x-base.card>
 
     <x-base.card class="mt-4">
-        <x-slot:title>
-            Reviews 
-            <x-base.link mode="link" href="{{route('reviews.create', ['id'=>$book->id])}}">Add</x-base.link>
+        <x-slot:title class="flex gap-2 items-center justify-between">
+            <div class="flex gap-2 items-center">
+                <span>Reviews</span> 
+                <x-base.badge mode="green">{{$book->reviews->count()}}</x-base.badge>
+            </div>
+            <x-base.link mode="link" href="{{route('reviews.create', ['id'=>$book->id])}}" class="flex gap-1">
+                <span>Add</span> <x-svg.plus/>
+            </x-base.link>
         </x-slot:title>
  
         @include('book._reviews')

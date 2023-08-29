@@ -38,8 +38,7 @@
         <table class="min-w-full text-left">
             <thead>
                 <tr class="border-b border-gray-300 uppercase text-sm">
-                    <th class="px-2 py-3">Title</th>
-                    <th class="px-2 py-3">Author</th>
+                    <th class="px-2 py-3">Title</th>                   
                     <th class="px-2 py-3">Year</th>
                     <th class="px-2 py-3">Category</th>
                     <th class="px-2 py-3 text-right">Actions</th>
@@ -50,7 +49,6 @@
                 @foreach ($books as $book )
                     <tr hx-get="{{route('books.show',['id'=>$book->id])}}" hx-select="#book">
                         <td class="px-2 py-3">{{$book->title}}</td>
-                        <td class="px-2 py-3">{{$book->author}}</td>
                         <td class="px-2 py-3">{{$book->year}}</td>
                         <td class="px-2 py-3">{{$book->category->name}}</td>
                         <td class="px-2 py-3 text-right flex gap-2 justify-end">
