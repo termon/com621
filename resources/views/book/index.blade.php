@@ -3,7 +3,7 @@
 
     {{-- <x-breadcrumbs :crumbs="['Home'=>route('home'),'Books'=>route('books.index')]" class="my-3"/> --}}
 
-    <x-base.breadcrumb class="my-3" :crumbs="[
+    <x-ui.breadcrumb class="my-3" :crumbs="[
             'Home' => route('home'), 
             'Books' => ''
         ]" 
@@ -18,24 +18,24 @@
     --}}
 
     <!-- list of books -->
-    <x-base.card>
+    <x-ui.card>
 
         <x-slot:title class="flex justify-between items-center">
             <span>Books</span>
             
-            <x-base.link href="{{route('books.create')}}" class="flex gap-1">
-                <x-svg.plus/><span>Create</span>
-            </x-base.link>
+            <x-ui.link href="{{route('books.create')}}" class="flex gap-1">
+                <x-ui.svg.plus/><span>Create</span>
+            </x-ui.link>
         </x-slot:title>
       
        
         <form method="GET" action="{{route('books.index')}}" class="flex gap-2 items-center">
-            <x-form.input name="search" value="{{$search}}" class="text-xs" />          
-            <x-base.button mode="yellow" class="text-xs">Search</x-base.button>
-            <x-base.link   mode="light" class="text-xs" href="{{route('books.index')}}">Clear</x-base.link>
+            <x-ui.form.input name="search" value="{{$search}}" class="text-xs" />          
+            <x-ui.button mode="yellow" class="text-xs">Search</x-ui.button>
+            <x-ui.link   mode="light" class="text-xs" href="{{route('books.index')}}">Clear</x-ui.link>
         </form>                   
        
-        <table class="min-w-full text-left">
+        {{-- <table class="min-w-full text-left">
             <thead>
                 <tr class="border-b border-gray-300 uppercase text-sm">
                     <th class="px-2 py-3">Title</th>                   
@@ -52,46 +52,42 @@
                         <td class="px-2 py-3">{{$book->year}}</td>
                         <td class="px-2 py-3">{{$book->category->name}}</td>
                         <td class="px-2 py-3 text-right flex gap-2 justify-end">
-                            <a href="{{ route('books.edit',['id' => $book->id])}}"><x-svg.edit/></a>     
-                            <a href="{{ route ('books.show',['id' => $book->id]) }}"><x-svg.eye/></a>                            
+                            <a href="{{ route('books.edit',['id' => $book->id])}}"><x-ui.svg.edit/></a>     
+                            <a href="{{ route ('books.show',['id' => $book->id]) }}"><x-ui.svg.eye/></a>                            
 
-                            {{-- <a href="{{ route('books.edit',['id' => $book->id])}}"  class="hover:text-blue-900 hover:underline text-blue-700"> Edit </a> --}}                             
-                            {{-- <a href="{{ route ('books.show',['id' => $book->id]) }}" class="hover:text-blue-900 hover:underline text-blue-700 mr-2">View</a> --}}
                         </td>
                     </tr>
                 @endforeach
             </tbody>
-        </table> 
+        </table>  --}}
         
-        {{-- <x-table>
+        <x-ui.table>
             <x-slot:thead class="bg-red-50">
-                <x-table.tr>
-                    <x-table.th>Title</x-table.th>
-                    <x-table.th>Author</x-table.th>
-                    <x-table.th>Year</x-table.th>
-                    <x-table.th class="text-right">Actions</x-table.th>
-                </x-table.tr>
+                <x-ui.table.tr>
+                    <x-ui.table.th>Title</x-ui.table.th>                    
+                    <x-ui.table.th>Year</x-ui.table.th>
+                    <x-ui.table.th class="text-right">Actions</x-ui.table.th>
+                </x-ui.table.tr>
             </x-slot:thead>
     
             <x-slot:tbody>
                 @foreach ($books as $book )
-                    <x-table.tr>
-                        <x-table.td>{{$book->title}}</x-table.td>
-                        <x-table.td>{{$book->author}}</x-table.td>
-                        <x-table.td>{{$book->year}}</x-table.td>
-                        <x-table.td class="text-right">
-                            <x-link href="/books/{{$book->id}}" mode="light" class="text-xs mr-2">View</x-link>
-                            <x-link href="/books/{{$book->id}}/edit" mode="light"  class="text-xs">Edit</x-link>
-                        </x-table.td>
-                    </x-table.tr>
+                    <x-ui.table.tr>
+                        <x-ui.table.td>{{$book->title}}</x-ui.table.td>                       
+                        <x-ui.table.td>{{$book->year}}</x-ui.table.td>
+                        <x-ui.table.td class="text-right flex gap-2 justify-end">
+                            <a href="{{ route('books.edit',['id' => $book->id])}}"><x-ui.svg.edit/></a>     
+                            <a href="{{ route ('books.show',['id' => $book->id]) }}"><x-ui.svg.eye/></a>
+                        </x-ui.table.td>
+                    </x-ui.table.tr>
                 @endforeach
             </x-slot:tbody>
-        </x-table> --}}
+        </x-ui.table> 
         
         <x-slot:footer class="flex justify-end">
             {{ $books->links() }}
         </x-slot:footer>
-    </x-base.card>
+    </x-ui.card>
 
 </x-layout>
 

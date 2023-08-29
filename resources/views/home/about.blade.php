@@ -1,7 +1,7 @@
 
 <x-layout>
     <x-slot:title>About</x-slot:title>
-    <x-base.breadcrumb class="my-3" :crumbs="[
+    <x-ui.breadcrumb class="my-3" :crumbs="[
         'Home' => route('home'), 
         'About' => ''
       ]" 

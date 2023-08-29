@@ -7,28 +7,28 @@
 
   <body class="flex flex-col justify-center h-screen">
 
-    <x-nav>
-      <x-nav.item href="{{route('home')}}">Home</x-nav.item> 
-      <x-nav.item href="{{route('about')}}">About</x-nav.item>     
-      <x-nav.item href="{{route('books.index')}}">Books</x-nav.item> 
+    <x-ui.nav>
+      <x-ui.nav.item href="{{route('home')}}">Home</x-ui.nav.item> 
+      <x-ui.nav.item href="{{route('about')}}">About</x-ui.nav.item>     
+      <x-ui.nav.item href="{{route('books.index')}}">Books</x-ui.nav.item> 
    
-      <x-nav.drop title="NavDropdown 1">
-        <x-nav.drop.item href="{{ route('books.index')}}">Books</x-nav.drop.item>
-        <x-nav.drop.item href="#">Dummy 1</x-nav.drop.item>
-        <x-nav.drop.item href="#">Dummy 2</x-nav.drop.item>
-      </x-nav.drop>
+      <x-ui.nav.drop title="NavDropdown 1">
+        <x-ui.nav.drop.item href="{{ route('books.index')}}">Books</x-ui.nav.drop.item>
+        <x-ui.nav.drop.item href="#">Dummy 1</x-ui.nav.drop.item>
+        <x-ui.nav.drop.item href="#">Dummy 2</x-ui.nav.drop.item>
+      </x-ui.nav.drop>
 
-      <x-nav.drop title="Dropdown 2">
+      <x-ui.nav.drop title="Dropdown 2">
         <div>
-          <x-nav.drop.item href="{{ route('books.index')}}">Books</x-nav.drop.item>
-          <x-nav.drop.item href="{{ route('about')}}">About</x-nav.drop.item>  
+          <x-ui.nav.drop.item href="{{ route('books.index')}}">Books</x-ui.nav.drop.item>
+          <x-ui.nav.drop.item href="{{ route('about')}}">About</x-ui.nav.drop.item>  
         </div>
-        <x-nav.drop.item href="{{ route('home')}}">Home</x-nav.drop.item>
-      </x-nav.drop>
-    </x-nav>
+        <x-ui.nav.drop.item href="{{ route('home')}}">Home</x-ui.nav.drop.item>
+      </x-ui.nav.drop>
+    </x-ui.nav>
 
     <!-- Display flash message -->
-    <x-base.flash />
+    <x-ui.flash />
 
     <main class="container mx-auto py-5 px-5 flex-grow overflow-y-scroll">
       {{ $slot }}

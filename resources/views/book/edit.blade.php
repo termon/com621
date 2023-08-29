@@ -1,6 +1,6 @@
 <x-layout>
 
-    <x-base.breadcrumb class="my-3" :crumbs="[
+    <x-ui.breadcrumb class="my-3" :crumbs="[
         'Home' => route('home'), 
         'Books' => route('books.index'), 
         $book->id => route('books.show', ['id' => $book->id]),
@@ -12,7 +12,7 @@
         <h1 class="text-3xl text-blue-900">Edit Book</h1>       
     </div> --}}
 
-    <x-base.card>
+    <x-ui.card>
         <x-slot:title>Edit Book</x-slot:title>
 
         <form  method="POST" action="{{ route('books.update', ['id' => $book->id]) }}">
@@ -24,13 +24,13 @@
                 @include("book._inputs")
 
                 <div class="flex items-center gap-2 mt-2">
-                    <x-base.button type="submit" mode="dark">Save</x-base.button>
-                    <x-base.link mode="light" href="{{ route('books.index') }}">Cancel</x-base.link>
+                    <x-ui.button type="submit" mode="dark">Save</x-ui.button>
+                    <x-ui.link mode="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
                 </div>
             </div>
             
         </form>
         
-    </x-base.card>
+    </x-ui.card>
 
 </x-layout>

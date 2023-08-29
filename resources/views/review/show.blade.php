@@ -4,7 +4,7 @@
         <h1 class="text-3xl text-blue-900">Book Review</h1>       
     </div>
        
-    <x-base.card>
+    <x-ui.card>
         <x-slot:title class="flex items-center justify-between">
             <div>
             
@@ -18,9 +18,9 @@
                 </div>
             </div>
 
-            <x-base.link href="{{route('books.show',['id'=>$review->book->id])}}" class="flex gap-2 items-center">
-                <x-svg.arrow direction="left"></x-svg.arrow>Back
-            </x-base.link>
+            <x-ui.link href="{{route('books.show',['id'=>$review->book->id])}}" class="flex gap-2 items-center">
+                <x-ui.svg.arrow direction="left"></x-ui.svg.arrow>Back
+            </x-ui.link>
         </x-slot:title>
 
         <div>{{$review->author}}</div>
@@ -33,8 +33,8 @@
             <form method="POST" action="{{route('reviews.destroy',['review'=>$review])}}" class="m-0">
                 @csrf()
                 @method('DELETE')
-                <x-base.button type="submit" mode="red">Delete</x-base.button>   
+                <x-ui.button type="submit" mode="red">Delete</x-ui.button>   
             </form>
         </x-slot:footer>
-    </x-base.card>
+    </x-ui.card>
 </x-layout>

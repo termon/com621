@@ -2,7 +2,7 @@
 <x-layout>
     <x-slot:title>Home</x-slot:title>
 
-    <x-base.breadcrumb class="my-3" :crumbs="[
+    <x-ui.breadcrumb class="my-3" :crumbs="[
         'Home' => '', 
       ]" 
     />
@@ -16,27 +16,27 @@
     </div>
     
     <div class="mt-4">
-        <x-base.button mode="blue">Button</x-base.button>
-        <x-base.button mode="red">Button</x-base.button>
-        <x-base.button mode="green">Button</x-base.button>
-        <x-base.button mode="yellow">Button</x-base.button>
-        <x-base.button mode="dark">Button</x-base.button>
-        <x-base.button mode="light">Button</x-base.button>
-        <x-base.button mode="oblue">Button</x-base.button>
-        <x-base.button mode="ored">Button</x-base.button>
-        <x-base.button mode="link">Button Link</x-base.button>
-        <x-base.button mode="x">Invalid mode Button</x-base.button>
+        <x-ui.button mode="blue">Button</x-ui.button>
+        <x-ui.button mode="red">Button</x-ui.button>
+        <x-ui.button mode="green">Button</x-ui.button>
+        <x-ui.button mode="yellow">Button</x-ui.button>
+        <x-ui.button mode="dark">Button</x-ui.button>
+        <x-ui.button mode="light">Button</x-ui.button>
+        <x-ui.button mode="oblue">Button</x-ui.button>
+        <x-ui.button mode="ored">Button</x-ui.button>
+        <x-ui.button mode="link">Button Link</x-ui.button>
+        <x-ui.button mode="x">Invalid mode Button</x-ui.button>
     </div>
     <div class="mt-5">
-        <x-base.button mode="blue">Link</x-base.button>
-        <x-base.button mode="red">Link</x-base.button>
-        <x-base.button mode="green">Link</x-base.button>
-        <x-base.button mode="yellow">Link</x-base.button>
-        <x-base.button mode="dark">Link</x-base.button>
-        <x-base.button mode="light">Link</x-base.button>
-        <x-base.button mode="oblue">Link</x-base.button>
-        <x-base.button mode="ored">Link</x-base.button>
-        <x-base.button mode="link">Link</x-base.button>
-        <x-base.button mode="x">Invalid mode Link</x-base.button>
+        <x-ui.button mode="blue">Link</x-ui.button>
+        <x-ui.button mode="red">Link</x-ui.button>
+        <x-ui.button mode="green">Link</x-ui.button>
+        <x-ui.button mode="yellow">Link</x-ui.button>
+        <x-ui.button mode="dark">Link</x-ui.button>
+        <x-ui.button mode="light">Link</x-ui.button>
+        <x-ui.button mode="oblue">Link</x-ui.button>
+        <x-ui.button mode="ored">Link</x-ui.button>
+        <x-ui.button mode="link">Link</x-ui.button>
+        <x-ui.button mode="x">Invalid mode Link</x-ui.button>
     </div>
 </x-layout>

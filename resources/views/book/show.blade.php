@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>Book Details</x-slot:title>
 
-    <x-base.breadcrumb class="my-3" :crumbs="[
+    <x-ui.breadcrumb class="my-3" :crumbs="[
             'Home' => route('home'), 
             'Books' => route('books.index'), 
             $book->title => '',
@@ -9,15 +9,15 @@
     />
 
     <!-- Book Card -->
-    <x-base.card class="py-2">
+    <x-ui.card class="py-2">
         <x-slot:title class="flex items-center justify-between">
             <h2 class="text-xl font-bold leading-tight mb-3">
                 Book Details
             </h2>
 
-            <x-base.link href="{{route('books.index')}}" class="flex gap-2 items-center">
-                <x-svg.arrow direction="left"></x-svg.arrow>Back
-            </x-base.link>
+            <x-ui.link href="{{route('books.index')}}" class="flex gap-2 items-center">
+                <x-ui.svg.arrow direction="left"></x-ui.svg.arrow>Back
+            </x-ui.link>
         </x-slot:title>
 
         <div class="flex justify-between">
@@ -32,7 +32,7 @@
                     @endforelse
                 </div>
                 
-                <x-base.badge mode="pink">{{$book->rating}}</x-base.badge>
+                <x-ui.badge mode="pink">{{$book->rating}}</x-ui.badge>
             </div>
 
             <div class="text-blue-800 font-bold">{{$book->year}}</div>
@@ -49,28 +49,28 @@
                 @include('book._delete') 
           
                 <!-- edit -->
-                <x-base.link href="{{ route('books.edit',['id'=>$book->id]) }}" class="flex gap-2" > 
-                    <span>Edit</span><x-svg.edit class=""></x-svg.edit>
-                </x-base.link>
+                <x-ui.link href="{{ route('books.edit',['id'=>$book->id]) }}" class="flex gap-2" > 
+                    <span>Edit</span><x-ui.svg.edit class=""></x-ui.svg.edit>
+                </x-ui.link>
                 
             </div>
         </x-slot:footer>
         
-    </x-base.card>
+    </x-ui.card>
 
-    <x-base.card class="mt-4">
+    <x-ui.card class="mt-4">
         <x-slot:title class="flex gap-2 items-center justify-between">
             <div class="flex gap-2 items-center">
                 <span>Reviews</span> 
-                <x-base.badge mode="green">{{$book->reviews->count()}}</x-base.badge>
+                <x-ui.badge mode="green">{{$book->reviews->count()}}</x-ui.badge>
             </div>
-            <x-base.link mode="link" href="{{route('reviews.create', ['id'=>$book->id])}}" class="flex gap-1">
-                <span>Add</span> <x-svg.plus/>
-            </x-base.link>
+            <x-ui.link mode="link" href="{{route('reviews.create', ['id'=>$book->id])}}" class="flex gap-1">
+                <span>Add</span> <x-ui.svg.plus/>
+            </x-ui.link>
         </x-slot:title>
  
         @include('book._reviews')
-    </x-base.card>
+    </x-ui.card>
 
 </x-layout>
 
