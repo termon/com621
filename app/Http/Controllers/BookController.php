@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -75,11 +76,12 @@ class BookController extends Controller
         $book = Book::find($id);     
         // create map of Category names keyed by Category id  
         $categories = Category::all()->pluck('name', 'id');
+        $authors = Author::all()->pluck('name', 'id');
           
         if (!isset($book)) {
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
-        return view('book.edit',['book' => $book, 'categories' => $categories]);
+        return view('book.edit',['book' => $book, 'categories' => $categories, 'authors' => $authors]);
     }
 
     /**

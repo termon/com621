@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorBookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BookController;
@@ -34,6 +35,9 @@ Route::post("/reviews",            [ReviewController::class, "store"])->name("re
 
 Route::get("/reviews/{review}",    [ReviewController::class, "show"])->name("reviews.show"); 
 Route::delete("/reviews/{review}", [ReviewController::class, "destroy"])->name("reviews.destroy");
+
+//Route::get("books/{id}/addauthor",  [AuthorBookController::class, "create"])->name("authorbook.create");
+//Route::post("books/{id}/addauthor", [AuthorBookController::class, "store"])->name("authorbook.store");
 
 //Route::resource('books', BookController::class);
 

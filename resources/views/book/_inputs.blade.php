@@ -21,7 +21,7 @@
 {{-- Using component groups --}}
 <x-ui.form.input-group label="Title" name="title" value="{{ $book->title }}" />
 
-<x-ui.form.input-group label="Author" name="author" value="{{ $book->author }}" class=""/>
+{{-- <x-ui.form.input-group label="Author" name="author" value="{{ $book->author }}" class=""/> --}}
 
 <div class="flex flex-row gap-4">  
     <!-- use flex-1 or w-full to make div take up available space or use grid grid-cols-2 gap-2 or wrapping div -->

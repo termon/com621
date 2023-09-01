@@ -23,7 +23,6 @@ class StoreBookRequest extends FormRequest
     {
         return [
             'title' => ['required','unique:books'],
-            'author' => 'required',
             'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
             'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'category_id' => ['required', 'exists:categories,id'],

@@ -63,6 +63,7 @@
             <x-slot:thead class="bg-red-50">
                 <x-ui.table.tr>
                     <x-ui.table.th>Title</x-ui.table.th>                    
+                    <x-ui.table.th>Category</x-ui.table.th>
                     <x-ui.table.th>Year</x-ui.table.th>
                     <x-ui.table.th class="text-right">Actions</x-ui.table.th>
                 </x-ui.table.tr>
@@ -71,7 +72,8 @@
             <x-slot:tbody>
                 @foreach ($books as $book )
                     <x-ui.table.tr>
-                        <x-ui.table.td>{{$book->title}}</x-ui.table.td>                       
+                        <x-ui.table.td>{{$book->title}}</x-ui.table.td>
+                        <x-ui.table.td>{{$book->category->name}}</x-ui.table.td>                       
                         <x-ui.table.td>{{$book->year}}</x-ui.table.td>
                         <x-ui.table.td class="text-right flex gap-2 justify-end">
                             <a href="{{ route('books.edit',['id' => $book->id])}}"><x-ui.svg.edit/></a>     
@@ -81,7 +83,7 @@
                 @endforeach
             </x-slot:tbody>
         </x-ui.table> 
-        
+        <div class="flex gap-0 text-left text-blue-500 font-bold"></div>
         <x-slot:footer class="flex justify-end">
             {{ $books->links() }}
         </x-slot:footer>

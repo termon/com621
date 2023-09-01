@@ -15,7 +15,8 @@
     <x-ui.card>
         <x-slot:title>Edit Book</x-slot:title>
 
-        <form  method="POST" action="{{ route('books.update', ['id' => $book->id]) }}">
+        <livewire:book-component :book="$book" :categories="$categories" :authors="$authors"/>
+        {{-- <form  method="POST" action="{{ route('books.update', ['id' => $book->id]) }}">
             @csrf
             @method('PUT')
 
@@ -28,8 +29,7 @@
                     <x-ui.link mode="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
                 </div>
             </div>
-            
-        </form>
+        </form> --}}
         
     </x-ui.card>
 

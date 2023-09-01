@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // AMC - will throw an exception when lazy loading occurs
-        Model::preventLazyLoading(! $this->app->isProduction());
+        //Model::preventLazyLoading(! $this->app->isProduction());
+        Model::shouldBeStrict(!$this->app->isProduction());
     }
 }

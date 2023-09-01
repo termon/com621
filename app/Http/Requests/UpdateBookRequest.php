@@ -25,7 +25,6 @@ class UpdateBookRequest extends FormRequest
         return [
             'id' => ['required'], // as this is an update we require id so it can be used in validating title uniqueness
             'title' => ['required',Rule::unique('books')->ignore($this->id)], // or $this->input('id')
-            'author' => 'required',
             'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
             'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'category_id' => ['required', 'exists:categories,id'],
