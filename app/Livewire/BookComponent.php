@@ -67,16 +67,15 @@ class BookComponent extends Component
     }
 
     public function addAuthor() 
-    {
-        //dd($this->authors->whereNotIn('id',$this->book_author_ids));
-        $this->book_author_ids->push('');      
+    {       
+        $this->book_author_ids = $this->book_author_ids->push('');      
     }
 
     public function removeAuthor($index)
     {
-        unset($this->book_author_ids[$index]);
         // possibly re-assign book_authors for re-render
-       
+        $this->book_author_ids->pull($index); //index needs to be key (not position)
+        //unset($this->book_author_ids[$index]);  
     }
 
     public function save() 

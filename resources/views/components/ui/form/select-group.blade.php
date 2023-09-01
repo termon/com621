@@ -1,4 +1,4 @@
-@props([
+{{-- @props([
     'label' => null, 
     'name', 
     'value', 
@@ -10,4 +10,12 @@
     @endisset
     <x-ui.form.select {{$attributes->except('class')}} name="{{$name}}" value="{{ $value }}" :options="$options" /> 
     <x-ui.form.error name="{{$name}}" />  
+</div> --}}
+
+<div {{ $attributes->merge(["class" => "mb-4"])->only('class') }}>
+    @isset($attributes['label'])
+        <x-ui.form.label for="{{$attributes['name']}}">{{$attributes['label']}}</x-ui.form.label>    
+    @endisset
+    <x-ui.form.select {{$attributes->except(['class','options', 'label'])}}  :options="$attributes['options']" /> 
+    <x-ui.form.error name="{{$attributes['name']}}" />  
 </div>

@@ -23,7 +23,7 @@
          <div class="flex gap-1 border rounded p-3 mt-2">
             @foreach($book_author_ids as $i => $id) 
                 <div class="flex items-center gap-1">  
-                    <x-ui.form.select-group name="book_author_ids.{{$i}}" :options="$this->authors" value="{{$id}}" wire:model='book_author_ids.{{$i}}' class="mb-0"/>
+                    <x-ui.form.select-group :options="$this->authors" name="book_author_ids.{{$i}}" wire:model='book_author_ids.{{$i}}' class="mb-0"/> 
                     <x-ui.button type="button" mode="link" wire:click="removeAuthor({{$i}})"><x-ui.svg.trash/></x-ui.button>
                 </div>
             @endforeach
