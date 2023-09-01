@@ -16,17 +16,19 @@
         
         <div class="flex justify-between items-center" >  
             <x-ui.form.label>Authors</x-ui.form.label>         
-            <x-ui.link wire:click="addAuthor" class="flex gap-1 items-center"><x-ui.svg.plus/>Add</x-ui.link>
+            <x-ui.link wire:click="addAuthor" class="flex gap-1 items-center cursor-pointer">
+                <x-ui.svg.plus/>Add
+            </x-ui.link>
         </div>
          <div class="flex gap-1 border rounded p-3 mt-2">
             @foreach($book_author_ids as $i => $id) 
                 <div class="flex items-center gap-1">  
-                    <x-ui.form.select-group label="Author-{{$i}}" name="book_author_ids.{{$i}}" :options="$this->authors" value="{{$id}}" wire:model='book_author_ids.{{$i}}' class=""/>
+                    <x-ui.form.select-group name="book_author_ids.{{$i}}" :options="$this->authors" value="{{$id}}" wire:model='book_author_ids.{{$i}}' class="mb-0"/>
                     <x-ui.button type="button" mode="link" wire:click="removeAuthor({{$i}})"><x-ui.svg.trash/></x-ui.button>
                 </div>
             @endforeach
         </div>
-        <x-ui.form.select-group label="Category" name="category_id" :options="$categories" value="" wire:model='category_id'/>
+        <x-ui.form.select-group label="Category" name="category_id"  value="{{$category_id}}" :options="$categories"  wire:model='category_id'/>
 
         <x-ui.form.textarea-group label="Description" name="description" rows="8" value="" wire:model='description' class=""/>
         

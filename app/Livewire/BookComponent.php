@@ -21,14 +21,14 @@ class BookComponent extends Component
     public $id;
 
     #[Rule('required')] 
-    public $title = '';
+    public $title;
     #[Rule('required')] 
-    public $year = 0;
+    public $year;
     #[Rule('required')] 
-    public $rating = 0;
-    public $category_id = 0;
+    public $rating;
+    public $category_id;
     #[Rule('required')] 
-    public $description = '';
+    public $description;
 
    
     #[Computed()]
@@ -43,7 +43,8 @@ class BookComponent extends Component
         $this->title = $book->title;
         $this->year = $book->year;
         $this->rating = $book->rating;
-        $this->description = $book->description;    
+        $this->description = $book->description; 
+        $this->category_id = $book->category_id;     
         $this->book_author_ids = $book->authors->pluck('id');   
     }
    
