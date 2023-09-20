@@ -15,7 +15,7 @@
     <x-ui.card>
         <x-slot:title>Edit Book</x-slot:title>
 
-        <livewire:book-component :book="$book" :categories="$categories" :authors="$authors"/>
+        <livewire:book-component :book="$book" :categories="$categories" :authors="$authors" />
         {{-- <form  method="POST" action="{{ route('books.update', ['id' => $book->id]) }}">
             @csrf
             @method('PUT')

@@ -1,11 +1,11 @@
 <x-layout>
 
     <div class="flex justify-between items-center border-b border-gray-700 pb-1 mb-3">
-        <h1 class="text-3xl text-blue-900">Create Book</h1>       
+        <h1 class="text-3xl text-blue-900">Add Book Review</h1>       
     </div>
        
     <x-ui.card>
-        {{-- <x-slot:title>Create Book</x-slot:title> --}}
+        <x-slot:title><span class="mr-2">For {{$book->title}}</span><x-ui.badge>{{$book->category->name}}</x-ui.badge></x-slot:title>
 
         <form  method="POST" action="{{ route('reviews.store') }}">
             @csrf
@@ -13,7 +13,7 @@
                            
             <div class="flex gap-4">  
                 <!-- use flex-1 or w-full to make div take up available space or use grid grid-cols-2 gap-2 or wrapping div -->
-                <x-ui.form.input-group label="Author" name="name" value="{{ $review->name }}" class="flex-1" />
+                <x-ui.form.input-group label="Name" name="name" value="{{ $review->name }}" class="flex-1" />
                 <x-ui.form.input-group label="Rating" name="rating" value="{{ $review->rating }}" type="number" step="0.1" class="flex-1"/>
             </div>
 

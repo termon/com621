@@ -30,10 +30,10 @@ class BookComponent extends Component
     #[Rule('required')] 
     public $description;
 
-   
     #[Computed()]
     public function availableAuthors() 
     {
+        //dd($this->book_author_ids);
         //$a = $this->authors->whereNotIn('id',$this->book_author_ids);
         return $this->authors;
     }
@@ -68,19 +68,19 @@ class BookComponent extends Component
 
     public function addAuthor() 
     {       
-        $this->book_author_ids = $this->book_author_ids->push('');      
+        // add invalid book id (0) as placeholder with additional validator 'exists:authors,id'
+        $this->book_author_ids = $this->book_author_ids->push(0);  
     }
 
-    public function removeAuthor($index)
-    {
-        // possibly re-assign book_authors for re-render
-        $this->book_author_ids->pull($index); //index needs to be key (not position)
-        //unset($this->book_author_ids[$index]);  
+    public function removeAuthor($id)
+    {       
+        // possibly re-assign book_authors for re-render       
+        $this->book_author_ids = $this->book_author_ids->filter(fn($v, $k) => $v != $id ); //id needs to be key (not position)
     }
 
     public function save() 
     {
-        $this->validate(['book_author_ids.*' => ['required'] ], ['book_author_ids.*' => 'Please select Author']);         
+        $this->validate(['book_author_ids.*' => ['required','exists:authors,id'] ], ['book_author_ids.*' => 'Please select Author']);         
         $this->propertiesToBook();
         $this->book->save();
        

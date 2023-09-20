@@ -26,8 +26,9 @@ class ReviewController extends Controller
     {
         $review = new Review;
         $review->book_id = $id;
+        $book = Book::findOrFail($id);
 
-        return view('review.create', ['review' => $review]);
+        return view('review.create', ['review' => $review, 'book' => $book]);
     }
 
     /**

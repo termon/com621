@@ -22,8 +22,8 @@
         <x-ui.button mode="yellow">Button</x-ui.button>
         <x-ui.button mode="dark">Button</x-ui.button>
         <x-ui.button mode="light">Button</x-ui.button>
-        <x-ui.button mode="oblue">Button</x-ui.button>
-        <x-ui.button mode="ored">Button</x-ui.button>
+        <x-ui.button mode="oblue">OButton</x-ui.button>
+        <x-ui.button mode="ored">OButton</x-ui.button>
         <x-ui.button mode="link">Button Link</x-ui.button>
         <x-ui.button mode="x">Invalid mode Button</x-ui.button>
     </div>
@@ -34,8 +34,8 @@
         <x-ui.button mode="yellow">Link</x-ui.button>
         <x-ui.button mode="dark">Link</x-ui.button>
         <x-ui.button mode="light">Link</x-ui.button>
-        <x-ui.button mode="oblue">Link</x-ui.button>
-        <x-ui.button mode="ored">Link</x-ui.button>
+        <x-ui.button mode="oblue">OLink</x-ui.button>
+        <x-ui.button mode="ored">OLink</x-ui.button>
         <x-ui.button mode="link">Link</x-ui.button>
         <x-ui.button mode="x">Invalid mode Link</x-ui.button>
     </div>

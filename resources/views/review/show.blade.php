@@ -23,7 +23,7 @@
             </x-ui.link>
         </x-slot:title>
 
-        <div>{{$review->author}}</div>
+        <div>{{$review->name}}</div>
         
         
 

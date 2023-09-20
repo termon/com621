@@ -20,11 +20,11 @@
                 <x-ui.svg.plus/>Add
             </x-ui.link>
         </div>
-         <div class="flex gap-1 border rounded p-3 mt-2">
-            @foreach($book_author_ids as $i => $id) 
-                <div class="flex items-center gap-1">  
+         <div class="flex gap-1 items-center border rounded p-3 mt-2">
+            @foreach($book_author_ids as $i => $id)                
+                <div class="flex gap-1">  
                     <x-ui.form.select-group :options="$this->authors" name="book_author_ids.{{$i}}" wire:model='book_author_ids.{{$i}}' class="mb-0"/> 
-                    <x-ui.button type="button" mode="link" wire:click="removeAuthor({{$i}})"><x-ui.svg.trash/></x-ui.button>
+                    <x-ui.button type="button" mode="link" wire:click="removeAuthor({{$id}})"><x-ui.svg.trash/></x-ui.button>
                 </div>
             @endforeach
         </div>
@@ -33,7 +33,7 @@
         <x-ui.form.textarea-group label="Description" name="description" rows="8" value="" wire:model='description' class=""/>
         
         <div class="flex items-center gap-2 mt-2">
-            <x-ui.button mode="dark">Create</x-ui.button>             
+            <x-ui.button mode="dark">Save</x-ui.button>             
             <x-ui.link mode="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
         </div>
     </div>
