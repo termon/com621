@@ -1,5 +1,5 @@
 @props([ 'name' ])
 @error($name)
-    <div class="text-sm text-red-500 mt-2">{{ $message }}</div>
+    <div {{ $attributes->merge(["class" => "text-sm text-red-500"]) }}>{{ $message }}</div>
 @enderror       
              

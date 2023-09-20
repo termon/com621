@@ -14,7 +14,7 @@
                 
                 @include("book._inputs")
 
-                <div class="flex items-center gap-2 mt-2">
+                <div class="flex items-center gap-2">
                     <x-ui.button mode="dark">Create</x-ui.button>             
                     <x-ui.link mode="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
                 </div>

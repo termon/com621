@@ -10,12 +10,12 @@
             @csrf
             <input name="book_id" type="hidden" value="{{$book_id}}">
                            
-            <div class="flex gap-4">  
+            <div class="flex gap-4 mb-4">  
                 <!-- use flex-1 or w-full to make div take up available space or use grid grid-cols-2 gap-2 or wrapping div -->
                 <x-ui.form.select-group label="Author" name="author_id" value="{{$author_id}}" :options="$authors" class="flex-1" />
              </div>
 
-            <div class="flex items-center gap-2 mt-2">
+            <div class="flex items-center gap-2 mb-4">
                 <x-ui.button mode="dark">Add</x-ui.button>             
                 <x-ui.link mode="light" href="{{ route('books.show',['id' => $book_id]) }}">Cancel</x-ui.link>
             </div>
