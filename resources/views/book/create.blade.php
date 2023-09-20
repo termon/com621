@@ -7,7 +7,7 @@
     <x-ui.card>
         {{-- <x-slot:title>Create Book</x-slot:title> --}}
 
-        <form  method="POST" action="{{ route('books.store') }}">
+        <form  method="POST" action="{{ route('books.store') }}" enctype="multipart/form-data">
             @csrf
         
             <div class="p-3  rounded-lg">           

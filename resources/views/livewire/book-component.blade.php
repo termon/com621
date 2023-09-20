@@ -1,10 +1,9 @@
-<form  wire:submit="save">
+<form  wire:submit="save" enctype="multipart/form-data">
     @csrf
 
     <div class="p-3  rounded-lg">               
         <input name="id" type="hidden" wire:model='id'>
 
-        {{-- Using component groups --}}
         <x-ui.form.input-group label="Title" name="title" value="" wire:model='title' class="mb-4"/>
        
         <div class="flex flex-row gap-4 mb-4">  
@@ -29,11 +28,16 @@
             @endforeach
         </div>
 
-        <x-ui.form.select-group label="Category" name="category_id"  value="{{$category_id}}" :options="$categories"  wire:model='category_id' class="mb-4"/>
+        <x-ui.form.select-group label="Category" name="category_id"  value="{{$category_id}}" :options="$categories"  wire:model="category_id" class="mb-4"/>
 
         <x-ui.form.textarea-group label="Description" name="description" rows="8" value="" wire:model='description' class="mb-4"/>
         
-        <div class="flex items-center gap-2">
+        <div class="flex justify-between mb-4">
+            <x-ui.form.input-file-group label="Image" name="imagefile" wire:model="imagefile" />
+            <img src="{{$image}}" class="w-96">   
+        </div>
+
+        <div class="flex-1 items-center">
             <x-ui.button mode="dark">Save</x-ui.button>             
             <x-ui.link mode="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
         </div>

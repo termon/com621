@@ -2,10 +2,26 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rules\File;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreBookRequest extends FormRequest
 {
+
+    protected function prepareForValidation(): void
+    {
+        $file = $this->files->get('imagefile');        
+       
+        if ($file) {             
+            $image = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file)); 
+            $this->merge(['image' => $image ]);
+        }
+    }
+    // public function after(): array
+    // {  
+    //     return [];
+    // }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -27,6 +43,8 @@ class StoreBookRequest extends FormRequest
             'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['min:0', 'max:1000'],
+            'image' => ['nullable'],
+            'imagefile' => ['nullable', File::types(['png', 'jpg'])->max(12 * 1024),],
         ];
     }
 }

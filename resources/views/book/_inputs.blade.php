@@ -16,7 +16,7 @@
 </div> --}}
 
 {{-- Id required in UpdateFormRequest validation when verifying book title is unique --}}
-<input name="id" type="hidden" value={{$book->id}}>
+<input name="id" type="hidden" value="{{$book->id}}">
 
 {{-- Using component groups --}}
 <x-ui.form.input-group label="Title" name="title" value="{{ old('title', $book->title) }}" class="mb-4" />
@@ -29,6 +29,8 @@
     <x-ui.form.input-group label="Rating" name="rating" type="number" step="0.1" value="{{ old('rating',$book->rating) }}" class="flex-1 "/>
 </div>
 
-<x-ui.form.select-group label="Category" name="category_id" :options="$categories" value="{{ old('category_id',$book->category_id) }}" class="mb-4"/>
+<x-ui.form.select-group label="Category" name="category_id" :options="$categories" value="{{ old('category_id', $book->category_id) }}" class="mb-4"/>
     
 <x-ui.form.textarea-group label="Description" name="description" rows="8" value="{{ old('description',$book->description) }}" class="mb-4"/>
+
+<x-ui.form.input-file-group label="Image" name="imagefile" value="{{ old('imagefile') }}" class="mb-4"/>

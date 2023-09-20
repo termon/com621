@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Repositories\BookRepository;
+use Illuminate\Validation\Rules\File;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 
@@ -44,14 +45,15 @@ class BookController extends Controller
     {
         // $book = $request->validate([
         //     'title' => ['required','unique:books'],
-        //     'author' => 'required',
         //     'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
         //     'rating' => ['required', 'numeric', 'min:0', 'max:5'],
+        //     'category_id' => ['required', 'exists:categories,id'],
         //     'description' => ['min:0', 'max:1000'],
+        //     'imagefile' => [File::types(['png', 'jpg', 'jpeg'])->max(12 * 1024)],
+        //     'image' => ['nullable']
         // ]);
-    
-        // Book::create($book);
-        $book = $this->repo->create($request->validated());
+
+        $book = $this->repo->create( $request->safe()->except('imagefile') );
 
         return redirect()->route("books.index")->with('success', "Book Created Successfully");  
     }

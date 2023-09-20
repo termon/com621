@@ -38,8 +38,11 @@
             <div class="text-blue-800 font-bold">{{$book->year}}</div>
         </div>
 
-        <div class="mt-2 text-gray-600">
+        <div class="mt-4 text-gray-600 flex justify-between">
             <p class="">{{$book->description}}</p>
+            @if($book->image)
+                <img src="{{$book->image}}" class="w-96">
+            @endif
         </div>
 
           <!-- actions -->
