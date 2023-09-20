@@ -17,4 +17,4 @@ $classes = match ($mode) {
 };
 @endphp
 
-<input id={{$attributes['name']}} {{ $attributes->merge(['type' =>'file', 'class' => $classes])->class(['border', 'border-red-200' => $errors->has($name) ])}}>
+<input id={{$attributes['name']}} {{ $attributes->merge(['type' =>'file', 'class' => $classes])->class(['border', 'border-red-200' => $errors->has($attributes['name']) ])}}>
