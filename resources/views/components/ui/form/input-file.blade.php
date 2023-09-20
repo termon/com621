@@ -1,6 +1,4 @@
 @props([
-  'label',      
-  'name',
   'mode' => 'light'
 ])
 
@@ -19,4 +17,4 @@ $classes = match ($mode) {
 };
 @endphp
 
-<input id={{$name}} name={{$name}} type="file" {{ $attributes->merge(['class' => $classes])->class(['border', 'border-red-200' => $errors->has($name) ])}}>
+<input id={{$attributes['name']}} {{ $attributes->merge(['type' =>'file', 'class' => $classes])->class(['border', 'border-red-200' => $errors->has($name) ])}}>

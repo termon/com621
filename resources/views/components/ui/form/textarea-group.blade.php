@@ -1,8 +1,7 @@
-@props(['label', 'name', 'value'])
 <div {{ $attributes->only('class') }} }}>
-    @isset($label)
-        <x-ui.form.label name="{{$name}}" class="mb-2">{{$label}}</x-ui.form.label>    
+    @isset($attributes['label'])
+        <x-ui.form.label name="{{$attributes['name']}}" class="mb-2">{{$attributes['label']}}</x-ui.form.label>    
     @endisset
-    <x-ui.form.textarea name="{{$name}}" value="{{ $value }}" {{$attributes->except('class')}}/> 
-    <x-ui.form.error name="{{$name}}" class="mt-2"/>  
+    <x-ui.form.textarea {{$attributes->except(['class', 'label'])}} /> 
+    <x-ui.form.error name="{{ $attributes['name'] }}" class="mt-2"/>  
 </div>

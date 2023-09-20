@@ -19,16 +19,16 @@
 <input name="id" type="hidden" value={{$book->id}}>
 
 {{-- Using component groups --}}
-<x-ui.form.input-group label="Title" name="title" value="{{ $book->title }}" class="mb-4" />
+<x-ui.form.input-group label="Title" name="title" value="{{ old('title', $book->title) }}" class="mb-4" />
 
-{{-- <x-ui.form.input-group label="Author" name="author" value="{{ $book->author }}" class=""/> --}}
+{{-- <x-ui.form.input-group label="Author" name="author" value="{{ old('author', $book->author) }}" class=""/> --}}
 
 <div class="flex flex-row gap-4 mb-4">  
     <!-- use flex-1 or w-full to make div take up available space or use grid grid-cols-2 gap-2 or wrapping div -->
-    <x-ui.form.input-group label="Year" name="year" value="{{ $book->year }}" class="flex-1 "/>
-    <x-ui.form.input-group label="Rating" name="rating" type="number" step="0.1" value="{{ $book->rating }}" class="flex-1 "/>
+    <x-ui.form.input-group label="Year" name="year" value="{{ old('year',$book->year) }}" class="flex-1 "/>
+    <x-ui.form.input-group label="Rating" name="rating" type="number" step="0.1" value="{{ old('rating',$book->rating) }}" class="flex-1 "/>
 </div>
 
 <x-ui.form.select-group label="Category" name="category_id" :options="$categories" value="{{ old('category_id',$book->category_id) }}" class="mb-4"/>
     
-<x-ui.form.textarea-group label="Description" name="description" rows="8" value="{{ $book->description }}" class="mb-4"/>
+<x-ui.form.textarea-group label="Description" name="description" rows="8" value="{{ old('description',$book->description) }}" class="mb-4"/>
