@@ -34,8 +34,8 @@ class BookController extends Controller
     public function create()
     {
         $categories = Category::all()->pluck('name', 'id');
-      
-        return view('book.create', ['book' => new Book, 'categories' => $categories ]);
+        $authors = Author::all()->pluck('name', 'id');
+        return view('book.create', ['book' => new Book, 'categories' => $categories, 'authors' => $authors ]);
     }
 
     /**
@@ -52,7 +52,6 @@ class BookController extends Controller
         //     'imagefile' => [File::types(['png', 'jpg', 'jpeg'])->max(12 * 1024)],
         //     'image' => ['nullable']
         // ]);
-
         $book = $this->repo->create( $request->safe()->except('imagefile') );
 
         return redirect()->route("books.index")->with('success', "Book Created Successfully");  
@@ -125,4 +124,23 @@ class BookController extends Controller
         $book->delete();
         return redirect()->route("books.index")->with('success', "Book Destroyed Successfully");
     }
+
+    public function author_add(int $id)
+    {
+        $book = Book::findOrFail($id);
+        $authors = Author::pluck('name', 'id')->all();
+        return view('book.author_add', ['book' => $book, 'authors' => $authors]);
+    }
+
+    public function author_store(Request $request)
+    {
+        $book = Book::findOrFail($request->book_id);
+        $book_author_ids = $book->authors->pluck('id');
+
+        $book_author_ids->push($request->author_id);
+        $book->authors()->sync($book_author_ids);
+        $book->save();
+        return redirect()->route('books.show', ['id' => $book->id]);
+    }
+
 }

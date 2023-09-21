@@ -45,6 +45,7 @@ class StoreBookRequest extends FormRequest
             'description' => ['min:0', 'max:1000'],
             'image' => ['nullable'],
             'imagefile' => ['nullable', File::types(['png', 'jpg'])->max(12 * 1024),],
+            'authors.*' => ['nullable']
         ];
     }
 }

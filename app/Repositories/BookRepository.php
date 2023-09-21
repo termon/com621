@@ -13,7 +13,9 @@ class BookRepository
 
     public function create(array $data): ?Book
     {        
-        return Book::create($data);
+        $book = Book::create(collect($data)->except('authors')->toArray());
+        $book->authors()->sync($data['authors']);
+        return $book;
     }
     
     public function all(?string $search='') : Collection

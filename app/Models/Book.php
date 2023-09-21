@@ -29,7 +29,7 @@ class Book extends Model
 
     // relationships
     public function reviews() : HasMany {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Review::class)->orderBy('reviewed_on', 'desc');
     }
     
     public function category() : BelongsTo

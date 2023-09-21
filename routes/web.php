@@ -36,8 +36,8 @@ Route::post("/reviews",            [ReviewController::class, "store"])->name("re
 Route::get("/reviews/{review}",    [ReviewController::class, "show"])->name("reviews.show"); 
 Route::delete("/reviews/{review}", [ReviewController::class, "destroy"])->name("reviews.destroy");
 
-//Route::get("books/{id}/addauthor",  [AuthorBookController::class, "create"])->name("authorbook.create");
-//Route::post("books/{id}/addauthor", [AuthorBookController::class, "store"])->name("authorbook.store");
+Route::get("books/{id}/authoradd",    [BookController::class, "author_add"])->name("book.author_add");
+Route::post("books/{id}/authorstore", [BookController::class, "author_store"])->name("book.author_store");
 
 //Route::resource('books', BookController::class);
 
