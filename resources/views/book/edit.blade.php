@@ -15,22 +15,8 @@
     <x-ui.card>
         <x-slot:title>Edit Book</x-slot:title>
 
-        <livewire:book-component :book="$book" :categories="$categories" :authors="$authors" />
-        {{-- <form  method="POST" action="{{ route('books.update', ['id' => $book->id]) }}">
-            @csrf
-            @method('PUT')
+        <livewire:book-component :book="$book" :categories="$categories" :authors="$authors" />        
 
-            <div class="p-3 rounded-lg">
-                
-                @include("book._inputs")
-
-                <div class="flex items-center gap-2 mt-2">
-                    <x-ui.button type="submit" mode="dark">Save</x-ui.button>
-                    <x-ui.link mode="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
-                </div>
-            </div>
-        </form> --}}
-        
     </x-ui.card>
 
 </x-layout>

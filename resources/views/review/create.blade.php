@@ -13,11 +13,11 @@
                            
             <div class="flex gap-4">  
                 <!-- use flex-1 or w-full to make div take up available space or use grid grid-cols-2 gap-2 or wrapping div -->
-                <x-ui.form.input-group label="Name" name="name" value="{{ $review->name }}" class="flex-1" />
-                <x-ui.form.input-group label="Rating" name="rating" value="{{ $review->rating }}" type="number" step="0.1" class="flex-1"/>
+                <x-ui.form.input-group label="Name" name="name" value="{{  old('name', $review->name) }}" class="flex-1" />
+                <x-ui.form.input-group label="Rating" name="rating" value="{{  old('rating', $review->rating) }}" type="number" step="0.1" class="flex-1"/>
             </div>
 
-            <x-ui.form.textarea-group label="Comment" name="comment" rows="8" value="{{ $review->comment }}" />
+            <x-ui.form.textarea-group label="Comment" name="comment" rows="8" value="{{  old('comment', $review->comment) }}" />
             
             <div class="flex items-center gap-2 mt-2">
                 <x-ui.button mode="dark">Create</x-ui.button>             

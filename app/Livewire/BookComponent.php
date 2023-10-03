@@ -3,12 +3,11 @@
 namespace App\Livewire;
 
 use App\Models\Book;
-use App\Models\Author;
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
+
 use Illuminate\Validation\Rule;
-use App\Livewire\Forms\BookForm;
-use Livewire\Attributes\Computed;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rules\File;
 
@@ -16,45 +15,26 @@ class BookComponent extends Component
 {
     use WithFileUploads;
 
-    public ?Book $book;
     public Collection $categories;
-
     public Collection $authors;
     public Collection $book_author_ids;
     
     public $id;
-
-    //#[Rule('required')] 
     public $title;
-
-    //#[Rule('required')] 
     public $year;
-
-    //#[Rule('required')] 
     public $rating;
-
     public $category_id;
-
-    //#[Rule('required')] 
     public $description;
-
-    //#[Rule('nullable')]
     public $image;
 
     // file upload
     public $imagefile = null;
-    
-
-    #[Computed()]
-    public function availableAuthors() 
+       
+    public function mount(?Book $book, Collection $categories, Collection $authors)
     {
-        //dd($this->book_author_ids);
-        //$a = $this->authors->whereNotIn('id',$this->book_author_ids);
-        return $this->authors;
-    }
+        $this->categories = $categories;
+        $this->authors = $authors;
 
-    public function propertiesFromBook(Book $book)
-    {
         $this->id = $book->id;
         $this->title = $book->title;
         $this->year = $book->year;
@@ -62,30 +42,7 @@ class BookComponent extends Component
         $this->description = $book->description; 
         $this->category_id = $book->category_id;     
         $this->book_author_ids = $book->authors->pluck('id');
-
         $this->image = $book->image;   
-    }
-   
-    public function propertiesToBook()
-    {
-        $this->book->title = $this->title;
-        $this->book->year = $this->year;
-        $this->book->rating = $this->rating;
-        $this->book->description = $this->description;
-        $this->book->authors()->sync($this->book_author_ids);  
-        
-        if ($this->imagefile) {             
-           $this->book->image = 'data:' . $this->imagefile->getMimeType() . ';base64,' . base64_encode(file_get_contents($this->imagefile->path()));           
-        }
-    }
-    
-    public function mount(Book $book, Collection $categories, Collection $authors)
-    {
-        $this->book = $book;
-        $this->categories = $categories;
-        $this->authors = $authors;
-
-        $this->propertiesFromBook($book);
     }
 
     public function addAuthor() 
@@ -115,10 +72,21 @@ class BookComponent extends Component
             ['book_author_ids.*' => 'Please select Author']
         ); 
 
-        $this->propertiesToBook();
-        $this->book->save();
+        if ($this->imagefile) {             
+            $this->image = 'data:' . $this->imagefile->getMimeType() . ';base64,' . base64_encode(file_get_contents($this->imagefile->path()));           
+        }
+
+        // id will be 0 for new books
+        if ($this->id == 0) {
+            $book = Book::create($this->only(['title','rating','year','description','category_id', 'image']));
+            $book->authors()->sync($this->book_author_ids);          
+        } else {
+            $book = Book::find($this->id);    
+            $book->update($this->only(['title','rating','year','description','category_id', 'image']));
+            $book->authors()->sync($this->book_author_ids);    
+        }
        
-        return redirect()->route('books.show', ['id'=>$this->book->id])->with('success','Book updated');
+        return redirect()->route('books.show', ['id'=>$book->id])->with('success','Book updated');
     }
 
     public function render()

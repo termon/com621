@@ -34,7 +34,7 @@
         
         <div class="flex justify-between mb-4">
             <x-ui.form.input-file-group label="Image" name="imagefile" wire:model="imagefile" />
-            <img src="{{$image}}" class="w-96">   
+            @if(isset($image)) <img src="{{$image}}" class="w-96"> @endif  
         </div>
 
         <div class="flex-1 items-center">
