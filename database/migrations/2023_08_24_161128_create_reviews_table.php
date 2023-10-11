@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('rating');
-            $table->string('comment');
+            $table->longtext('comment');
             $table->date('reviewed_on')->default(now());
-            $table->foreignId('book_id')->constrained();
+            $table->foreignId('book_id')->constrained()->onDelete('cascade');
+            //$table->foreignIdFor(User::class)->constrained()->restrictOnDelete();            
             $table->timestamps();
         });
     }

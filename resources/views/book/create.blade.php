@@ -13,24 +13,4 @@
 </x-layout>
 
 
-<script>
-    function formData() {
-      return {
-        fields: [],
-        
-        addField() {
-          this.fields.push('') 
-        },
-        
-        removeField(index) {
-          this.fields.splice(index, 1)
-        },
-
-        getFieldName(index) {
-            return 'authors[' + index + ']0';
-        }
-      }
-    }  
-</script>
-
 

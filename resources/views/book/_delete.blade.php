@@ -1,6 +1,6 @@
 <x-ui.link x-data="" class="flex gap-2"
     x-on:click.prevent="$dispatch('open-modal', 'confirm-book-deletion')">
-  <span>Delete</span><x-ui.svg.trash class=""></x-ui.svg.trash>
+  <span>Delete</span><x-ui.svg.trash></x-ui.svg.trash>
 </x-ui.link>
 
 <x-ui.modal name="confirm-book-deletion" focusable>

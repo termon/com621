@@ -12,9 +12,12 @@ class BookRepository
 {
 
     public function create(array $data): ?Book
-    {        
+    {      
         $book = Book::create(collect($data)->except('authors')->toArray());
-        $book->authors()->sync($data['authors']);
+        if (isset($data['authors']))
+        {
+            $book->authors()->sync($data['authors']);           
+        }
         return $book;
     }
     
@@ -37,7 +40,12 @@ class BookRepository
 
     public function find(int $id): ?Book
     {
-        return Book::find($id);
+        return Book::with('reviews')->find($id);
+    }
+
+    public function findOrFail(int $id): ?Book
+    {
+        return Book::with('reviews')->findOrFail($id);
     }
 
     public function delete(int $id): bool
@@ -60,9 +68,14 @@ class BookRepository
 
     public function update(array $updated): ?Book
     {
-        $book = $this->find($updated['id']);
+        $book = $this->find($updated['id'] ?? 0);
         if ($book) {
-            $book->update($updated);
+            $book->update(collect($updated)->except('id','authors')->toArray());
+            //$book->update(collect($updated)->only('title','year','rating','description','image','category_id')->toArray());
+            if (isset($updated['authors']))
+            {
+                $book->authors()->sync($updated['authors']);           
+            }
             return $book;
         }
         return null;

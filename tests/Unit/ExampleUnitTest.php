@@ -2,15 +2,18 @@
 
 namespace Tests\Unit;
 
+use App\Repositories\BookRepository;
 use PHPUnit\Framework\TestCase;
 
-class ExampleTest extends TestCase
+class ExampleUnitTest extends TestCase
 {
     /**
      * A basic test example.
      */
-    public function test_that_true_is_true(): void
+    public function test_case_example(): void
     {
+        
         $this->assertTrue(true);
+        
     }
 }

@@ -116,7 +116,7 @@ class BookController extends Controller
      */
     public function destroy(int $id)
     {
-        $book = Book::find($id);
+        $book = $this->repo->find($id);
         if (!isset($book)) {
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
@@ -127,14 +127,23 @@ class BookController extends Controller
 
     public function author_add(int $id)
     {
-        $book = Book::findOrFail($id);
+        //$book = Book::findOrFail($request->book_id);
+        $book = $this->repo->find($id);
+        if (!isset($book)) {
+            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
+        }
         $authors = Author::pluck('name', 'id')->all();
         return view('book.author_add', ['book' => $book, 'authors' => $authors]);
     }
 
     public function author_store(Request $request)
     {
-        $book = Book::findOrFail($request->book_id);
+        //$book = Book::findOrFail($request->book_id);
+        $book = $this->repo->find($request->book_id);
+        if (!isset($book)) {
+            return redirect()->route('books.index')->with('warning', "Book {$request->book_id} does not exist!");
+        }
+
         $book_author_ids = $book->authors->pluck('id');
 
         $book_author_ids->push($request->author_id);

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Review;
-use Illuminate\Http\Request;
 use App\Repositories\BookRepository;
+use Illuminate\Http\Request;
+use App\Repositories\ReviewRepository;
 
 
 class ReviewController extends Controller
 {
-    public function __construct(private BookRepository $repo) {}
+    public function __construct(private ReviewRepository $repo, private BookRepository $bookRepo) {}
 
     /**
      * Display a listing of the resource.
@@ -20,13 +21,16 @@ class ReviewController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new review for specified book.
      */
     public function create($id)
     {
+        $book = $this->bookRepo->find($id);
+        if (!isset($book)) {
+            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
+        }
         $review = new Review;
         $review->book_id = $id;
-        $book = Book::findOrFail($id);
 
         return view('review.create', ['review' => $review, 'book' => $book]);
     }

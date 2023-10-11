@@ -1,6 +1,6 @@
 <table class="min-w-full text-left">
     <thead>
-        <tr class="border-b border-gray-300 uppercase text-sm">           
+        <tr class="border-b border-gray-300 uppercase text-sm">          
             <th class="px-2 py-3">Name</th>
             <th class="px-2 py-3">Rate</th>
             <th class="px-2 py-3">Reviewed</th>
