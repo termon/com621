@@ -12,7 +12,7 @@
     <tbody class="divide-y">
         @foreach ($book->reviews as $review )
             <tr class="text-xs">
-                <td class="px-2 py-3">{{$review->name}}</td>
+                <td class="px-2 py-3">{{$review->user->name}}</td>
                 <td class="px-2 py-3">{{$review->rating}}</td>
                 <td class="px-2 py-3">{{$review->reviewed_on_for_humans}}</td>
                 <td class="px-2 py-3">{{$review->short_comment}}</td>

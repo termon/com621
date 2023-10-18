@@ -41,8 +41,7 @@ class BookComponent extends Component
 
     public function updating() {
         if ($this->image_file) {             
-            $this->image = 'data:' . $this->image_file->getMimeType() . ';base64,' . base64_encode(file_get_contents($this->image_file->path()));           
-            dd($this->all());
+            $this->image = 'data:' . $this->image_file->getMimeType() . ';base64,' . base64_encode(file_get_contents($this->image_file->path()));                      
         }
     }
 
@@ -103,10 +102,10 @@ class BookComponent extends Component
             //$book->authors()->sync($this->book_authors);    
         }
         if ($book === null) {
-            return redirect()->route('books.index')->with('error','Book not updated');    
+            return redirect()->route('book.index')->with('error','Book not updated');    
         }
        
-        return redirect()->route('books.show', ['id'=>$book->id])->with('success','Book updated');
+        return redirect()->route('book.show', ['id'=>$book->id])->with('success','Book updated');
     }
 
     public function render()

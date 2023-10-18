@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Book;
-use App\Models\Review;
+use App\Models\Author;
 
+use App\Models\Review;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -40,12 +41,12 @@ class BookRepository
 
     public function find(int $id): ?Book
     {
-        return Book::with('reviews')->find($id);
+        return Book::with(['reviews','reviews.user'])->find($id);
     }
 
     public function findOrFail(int $id): ?Book
     {
-        return Book::with('reviews')->findOrFail($id);
+        return Book::with(['reviews','reviews.user'])->findOrFail($id);
     }
 
     public function delete(int $id): bool
@@ -79,6 +80,45 @@ class BookRepository
             return $book;
         }
         return null;
+    }
+
+    public function author_add(int $book_id, int $author_id) 
+    {
+        $book = $this->find($book_id);
+        
+        if ($book) {
+            $author_ids = $book->authors->pluck('id');
+            $author_ids->push($author_id);
+            $book->authors()->sync($author_ids);
+            $book->save();
+            return $book;
+        }
+        return null;
+    }
+    public function author_delete(int $book_id, int $author_id) 
+    {
+        $book = $this->find($book_id);
+        
+        if ($book) {
+            $author_ids = $book->authors->pluck('id')
+                    ->filter(fn(int $value) => $value != $author_id);
+            $book->authors()->sync($author_ids);
+            $book->save();
+
+            return $book;
+        }
+        return null;
+    }
+
+    public function make_author_select_list(?Book $book = null) 
+    {      
+        if ($book) {
+            // make list of authors not currently associated with book 
+            return Author::all()->diff($book->authors)->pluck('name','id');
+        }
+        // make list of all authors 
+        return Author::all()->pluck('name','id');
+        
     }
 
 }

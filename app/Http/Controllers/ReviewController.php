@@ -22,17 +22,19 @@ class ReviewController extends Controller
 
     /**
      * Show the form for creating a new review for specified book.
+     * DI will auto-create a new Review model for population
      */
-    public function create($id)
+    public function create($id, Review $review)
     {
+        
         $book = $this->bookRepo->find($id);
         if (!isset($book)) {
-            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
         }
-        $review = new Review;
+        
         $review->book_id = $id;
-
-        return view('review.create', ['review' => $review, 'book' => $book]);
+        $review->user_id = auth()->user()->id;
+        return view('reviews.create', ['review' => $review, 'book' => $book]);
     }
 
     /**
@@ -43,14 +45,16 @@ class ReviewController extends Controller
         //$request->merge(['reviewed_on' => now()]);
         $review = $request->validate([
             'book_id' => ['required'],
-            'name' => ['required'],            
+            'user_id' => ['required'],
+            //'name' => ['required'],            
             'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'comment' => ['required','min:5', 'max:1000'],
             //'reviewed_on' => ['required']
         ]);
-        
-        Review::create($review);
-        return redirect()->route("books.show", ['id'=>$request->book_id])->with('success', "Review Created Successfully");
+        $review['reviewed_on'] = now();
+        $review = Review::create($review);       
+        return redirect()->route("books.show", ['id'=>$review->book_id])
+                         ->with('success', "Review Created Successfully");
 
     }
 
@@ -59,7 +63,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {       
-        return view ('review.show', ['review' => $review]);
+        return view ('reviews.show', ['review' => $review]);
     }
 
     /**
@@ -86,6 +90,7 @@ class ReviewController extends Controller
        $book_id = $review->book_id;
 
        $review->delete();
-       return redirect()->route("books.show", ['id'=>$book_id])->with('success', "Review Destroyed Successfully");
+       return redirect()->route("books.show", ['id'=>$book_id])
+                        ->with('success', "Review Destroyed Successfully");
     }
 }

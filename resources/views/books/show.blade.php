@@ -49,12 +49,19 @@
           <x-slot:footer>
             <div class="flex justify-end space-x-5 items-center">
                 <!-- delete confirmation modal -->
-                @include('book._delete') 
+                @include('books._delete') 
           
                 <!-- edit -->
                 <x-ui.link href="{{ route('books.edit',['id'=>$book->id]) }}" class="flex gap-2" > 
                     <span>Edit</span><x-ui.svg.edit class=""></x-ui.svg.edit>
                 </x-ui.link>
+                <x-ui.link href="{{ route('authorbooks.create',['id'=>$book->id]) }}" class="flex gap-2" > 
+                    <span>Add Author</span><x-ui.svg.plus></x-ui.svg.plus>
+                </x-ui.link>
+                <x-ui.link href="{{ route('authorbooks.delete',['id'=>$book->id]) }}" class="flex gap-2" > 
+                    <span>Remove Author</span><x-ui.svg.trash></x-ui.svg.trash>
+                </x-ui.link>
+             
                 
             </div>
         </x-slot:footer>
@@ -72,7 +79,7 @@
             </x-ui.link>
         </x-slot:title>
  
-        @include('book._reviews')
+        @include('books._reviews')
     </x-ui.card>
 
 </x-layout>

@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,12 +14,14 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            //$table->foreignIdFor(User::class)->constrained()->restrictOnDelete();   
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->foreignId('book_id')->constrained()->onDelete('cascade');
+            
+            //$table->string('name');
             $table->decimal('rating');
             $table->longtext('comment');
-            $table->date('reviewed_on')->default(now());
-            $table->foreignId('book_id')->constrained()->onDelete('cascade');
-            //$table->foreignIdFor(User::class)->constrained()->restrictOnDelete();            
+            $table->date('reviewed_on')->default(now());         
             $table->timestamps();
         });
     }

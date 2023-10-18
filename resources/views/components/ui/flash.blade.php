@@ -28,7 +28,7 @@ $message = Session::get('warning') ?? $message;
 
 <!-- Alert component -->
 @if($message!=null)
-<div class="absolute top-5 right-5 m-auto" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)">
+<div class="absolute top-10 right-5 m-auto" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)">
     <div class="bg-white rounded-lg border-gray-300 border p-3 shadow-lg">
     <div class="flex ">
         <div class="px-2"> 

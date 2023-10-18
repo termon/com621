@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\AuthorBookController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\AuthorBookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,26 +19,40 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get("/",[HomeController::class,'index'] )->name("home");
-
 Route::get("/about",[HomeController::class,'about'] )->name("about");
 
-Route::get("/books/create",    [BookController::class, "create"])->name("books.create"); 
-Route::post("/books",          [BookController::class, "store"])->name("books.store"); 
-Route::get("/books",           [BookController::class, 'index'])->name("books.index");
-Route::get("/books/{id}/edit", [BookController::class, "edit"])->name("books.edit");
-Route::put("/books/{id}",      [BookController::class, "update"])->name("books.update");
-Route::get("/books/{id}",      [BookController::class, "show"])->name("books.show");
-Route::delete("/books/{id}",   [BookController::class, "destroy"])->name("books.destroy");
-Route::post("/books",          [BookController::class, "store"])->name("books.store"); 
+Route::get('/hello/{name}/{age?}', function(string $name, ?int $age=null) {
+    return "Hello " .  $name . " aged " . ($age ?? 'unknown');
+})->where('age', '[0-9]+');;
 
-Route::get("/reviews/create/{id}", [ReviewController::class, "create"])->name("reviews.create"); 
-Route::post("/reviews",            [ReviewController::class, "store"])->name("reviews.store"); 
+Route::middleware(['auth'])->group(function() {
+    Route::get("/books/create",    [BookController::class, "create"])->name("books.create"); 
+    Route::post("/books",          [BookController::class, "store"])->name("books.store"); 
+    Route::get("/books",           [BookController::class, 'index'])->name("books.index");
+    Route::get("/books/{id}/edit", [BookController::class, "edit"])->name("books.edit");
+    Route::put("/books/{id}",      [BookController::class, "update"])->name("books.update");
+    Route::get("/books/{id}",      [BookController::class, "show"])->name("books.show");
+    Route::delete("/books/{id}",   [BookController::class, "destroy"])->name("books.destroy");
+    Route::post("/books",          [BookController::class, "store"])->name("books.store");     
+   
+    Route::get("/reviews/create/{id}", [ReviewController::class, "create"])->name("reviews.create"); 
+    Route::post("/reviews",            [ReviewController::class, "store"])->name("reviews.store");  
+    Route::get("/reviews/{review}",    [ReviewController::class, "show"])->name("reviews.show"); 
+    Route::delete("/reviews/{review}", [ReviewController::class, "destroy"])->name("reviews.destroy");
+    
+    Route::get("/authorbooks/{id}/create",    [AuthorBookController::class, "create"])->name("authorbooks.create");
+    Route::post("/authorbooks/{id}",          [AuthorBookController::class, "store"])->name("authorbooks.store");
+    Route::get("/authorbooks/{id}/delete",    [AuthorBookController::class, "delete"])->name("authorbooks.delete");
+    Route::delete("/authorbooks/{id}/destroy",[AuthorBookController::class, "destroy"])->name("authorbooks.destroy");
+});
 
-Route::get("/reviews/{review}",    [ReviewController::class, "show"])->name("reviews.show"); 
-Route::delete("/reviews/{review}", [ReviewController::class, "destroy"])->name("reviews.destroy");
 
-Route::get("books/{id}/authoradd",    [BookController::class, "author_add"])->name("book.author_add");
-Route::post("books/{id}/authorstore", [BookController::class, "author_store"])->name("book.author_store");
+Route::get("/login",   [UserController::class, "login"])->name("login");
+Route::post("/login",  [UserController::class, "authenticate"])->name("authenticate");
+Route::post("/logout", [UserController::class, "logout"])->name("logout");
+Route::get("/register",[UserController::class, "create"])->name("user.create");
+Route::post("/register",[UserController::class, "store"])->name("user.store");
+
 
 //Route::resource('books', BookController::class);
 

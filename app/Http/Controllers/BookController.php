@@ -6,9 +6,7 @@ use App\Models\Book;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Repositories\BookRepository;
-use Illuminate\Validation\Rules\File;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 
@@ -25,7 +23,7 @@ class BookController extends Controller
        
         $books = $this->repo->paginate(10, $search);
         //$books = Book::search($search)->paginate(20); //all();
-        return view('book.index', ['books' => $books, "search" => $search ]);
+        return view('books.index', ['books' => $books, "search" => $search ]);
     }
 
     /**
@@ -35,7 +33,7 @@ class BookController extends Controller
     {
         $categories = Category::all()->pluck('name', 'id');
         $authors = Author::all()->pluck('name', 'id');
-        return view('book.create', ['book' => new Book, 'categories' => $categories, 'authors' => $authors ]);
+        return view('books.create', ['book' => new Book, 'categories' => $categories, 'authors' => $authors ]);
     }
 
     /**
@@ -66,7 +64,7 @@ class BookController extends Controller
         if (!isset($book)) {
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
-        return view ('book.show', ['book' => $book]);
+        return view ('books.show', ['book' => $book]);
     }
 
     /**
@@ -80,9 +78,9 @@ class BookController extends Controller
         $authors = Author::all()->pluck('name', 'id');
           
         if (!isset($book)) {
-            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
         }
-        return view('book.edit',['book' => $book, 'categories' => $categories, 'authors' => $authors]);
+        return view('books.edit',['book' => $book, 'categories' => $categories, 'authors' => $authors]);
     }
 
     /**
@@ -123,33 +121,6 @@ class BookController extends Controller
 
         $book->delete();
         return redirect()->route("books.index")->with('success', "Book Destroyed Successfully");
-    }
-
-    public function author_add(int $id)
-    {
-        //$book = Book::findOrFail($request->book_id);
-        $book = $this->repo->find($id);
-        if (!isset($book)) {
-            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
-        }
-        $authors = Author::pluck('name', 'id')->all();
-        return view('book.author_add', ['book' => $book, 'authors' => $authors]);
-    }
-
-    public function author_store(Request $request)
-    {
-        //$book = Book::findOrFail($request->book_id);
-        $book = $this->repo->find($request->book_id);
-        if (!isset($book)) {
-            return redirect()->route('books.index')->with('warning', "Book {$request->book_id} does not exist!");
-        }
-
-        $book_author_ids = $book->authors->pluck('id');
-
-        $book_author_ids->push($request->author_id);
-        $book->authors()->sync($book_author_ids);
-        $book->save();
-        return redirect()->route('books.show', ['id' => $book->id]);
     }
 
 }

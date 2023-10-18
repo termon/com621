@@ -5,15 +5,19 @@
     </div>
        
     <x-ui.card>
-        <x-slot:title><span class="mr-2">For {{$book->title}}</span><x-ui.badge>{{$book->category->name}}</x-ui.badge></x-slot:title>
+        <x-slot:title>
+            <span class="mr-2">For {{$book->title}}</span>
+            <x-ui.badge>{{$book->category->name}}</x-ui.badge>
+        </x-slot:title>
 
         <form  method="POST" action="{{ route('reviews.store') }}">
             @csrf
             <input name="book_id" type="hidden" value="{{$review->book_id}}">
-                           
+            <input name="user_id" type="hidden" value="{{$review->user_id}}">
+                             
             <div class="flex gap-4">  
                 <!-- use flex-1 or w-full to make div take up available space or use grid grid-cols-2 gap-2 or wrapping div -->
-                <x-ui.form.input-group label="Name" name="name" value="{{  old('name', $review->name) }}" class="flex-1" />
+                {{-- <x-ui.form.input-group label="Name" name="name" value="{{  old('name', $review->name) }}" class="flex-1" />  --}}
                 <x-ui.form.input-group label="Rating" name="rating" value="{{  old('rating', $review->rating) }}" type="number" step="0.1" class="flex-1"/>
             </div>
 

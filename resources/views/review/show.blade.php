@@ -14,27 +14,25 @@
                     </h2>
                     <span class="text-blue-800">{{ $review->reviewed_on_formatted }}</span>
                     <span>by</span>
-                    <span class="text-green-800">{{ $review->name }}</span>
+                    <span class="text-green-800">{{ $review->user->name }}</span>
                 </div>
             </div>
 
             <x-ui.link href="{{route('books.show',['id'=>$review->book->id])}}" class="flex gap-2 items-center">
                 <x-ui.svg.arrow direction="left"></x-ui.svg.arrow>Back
             </x-ui.link>
-        </x-slot:title>
-
-        <div>{{$review->name}}</div>
-        
-        
+        </x-slot:title>    
 
         <div>{{$review->comment}}</div>
 
         <x-slot:footer>
+            @can('delete', $review)
             <form method="POST" action="{{route('reviews.destroy',['review'=>$review])}}" class="m-0">
                 @csrf()
                 @method('DELETE')
                 <x-ui.button type="submit" mode="red">Delete</x-ui.button>   
             </form>
+            @endcan()
         </x-slot:footer>
     </x-ui.card>
 </x-layout>

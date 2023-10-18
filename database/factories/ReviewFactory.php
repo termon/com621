@@ -17,7 +17,7 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            //'name' => fake()->name(),
             'rating' => fake()->numberBetween(0,5),
             'comment' => fake()->words(fake()->numberBetween(10,100), true),
             'reviewed_on' => fake()->dateTimeBetween('-1 year','now')
