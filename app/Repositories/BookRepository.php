@@ -82,7 +82,7 @@ class BookRepository
         return null;
     }
 
-    public function author_add(int $book_id, int $author_id) 
+    public function authorAdd(int $book_id, int $author_id) 
     {
         $book = $this->find($book_id);
         
@@ -95,7 +95,7 @@ class BookRepository
         }
         return null;
     }
-    public function author_delete(int $book_id, int $author_id) 
+    public function authorDelete(int $book_id, int $author_id) 
     {
         $book = $this->find($book_id);
         
@@ -110,7 +110,7 @@ class BookRepository
         return null;
     }
 
-    public function make_author_select_list(?Book $book = null) 
+    public function makeAuthorSelectList(?Book $book = null) 
     {      
         if ($book) {
             // make list of authors not currently associated with book 

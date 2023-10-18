@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AuthorBook;
 use Illuminate\Http\Request;
 use App\Repositories\BookRepository;
 
@@ -22,7 +21,7 @@ class AuthorBookController extends Controller
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
         // make list of authors not currently associated with book 
-        $authors = $this->repo->make_author_select_list($book); //Author::all()->diff($book->authors)->pluck('name','id');
+        $authors = $this->repo->makeAuthorSelectList($book); //Author::all()->diff($book->authors)->pluck('name','id');
 
         return view('authorbooks.create', ['book' => $book, 'authors' => $authors]);
     }
@@ -38,7 +37,7 @@ class AuthorBookController extends Controller
             'author_id' => 'Author must be selected'
         ]);
 
-        $book = $this->repo->author_add($id, $data['author_id']);
+        $book = $this->repo->authorAdd($id, $data['author_id']);
         if (!isset($book)) {
             return redirect()->route('books.index')->with('warning', "Book {$request->book_id} does not exist!");
         }
@@ -70,7 +69,7 @@ class AuthorBookController extends Controller
             'author_id' => 'Author must be selected'
         ]);
        
-        $book = $this->repo->author_delete($id, $data['author_id']);
+        $book = $this->repo->authorDelete($id, $data['author_id']);
        
         // shouldn't need to check as post form contained valid book id
         // if (!isset($book)) {
