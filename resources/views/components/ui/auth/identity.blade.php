@@ -8,7 +8,7 @@
 @guest
 <div class="flex gap-2 items-center"> 
     <x-ui.nav.item href="{{route('login')}}">Login</x-ui.nav.item>
-    <x-ui.nav.item href="{{route('user.create')}}">Register</x-ui.nav.item>
+    <x-ui.nav.item href="{{route('users.create')}}">Register</x-ui.nav.item>
 </div>
 @endguest 
 

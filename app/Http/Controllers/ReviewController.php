@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
 use App\Models\Review;
-use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
-use App\Repositories\ReviewRepository;
+use App\Services\BookService;
+use App\Services\ReviewService;
 
 
 class ReviewController extends Controller
 {
-    public function __construct(private ReviewRepository $repo, private BookRepository $bookRepo) {}
+    public function __construct(private ReviewService $Service, private BookService $bookService) {}
 
     /**
      * Display a listing of the resource.
@@ -27,7 +26,7 @@ class ReviewController extends Controller
     public function create($id, Review $review)
     {
         
-        $book = $this->bookRepo->find($id);
+        $book = $this->bookService->find($id);
         if (!isset($book)) {
             return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
         }

@@ -4,7 +4,7 @@
     <x-ui.card>
         <x-slot:title>Register</x-slot:title>
        
-        <form  method="POST" action="{{ route('user.create') }}">
+        <form  method="POST" action="{{ route('users.create') }}">
             @csrf
 
             <x-ui.form.input-group label="Name" name="name" value="{{ old('name', $user->name) }}" class="mb-4" />

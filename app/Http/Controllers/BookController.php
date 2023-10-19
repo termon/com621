@@ -6,13 +6,13 @@ use App\Models\Book;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Repositories\BookRepository;
+use App\Services\BookService;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 
 class BookController extends Controller
 {
-    public function __construct(private BookRepository $repo) {}
+    public function __construct(private BookService $service) {}
 
     /**
      * Display a listing of the resource.
@@ -21,9 +21,9 @@ class BookController extends Controller
     {
         $search = $request->input("search");
        
-        $books = $this->repo->paginate(10, $search);
+        $books = $this->service->paginate(10, $search);
         //$books = Book::search($search)->paginate(20); //all();
-        return view('books.index', ['books' => $books, "search" => $search ]);
+        return view('book.index', ['books' => $books, "search" => $search ]);
     }
 
     /**
@@ -33,7 +33,7 @@ class BookController extends Controller
     {
         $categories = Category::all()->pluck('name', 'id');
         $authors = Author::all()->pluck('name', 'id');
-        return view('books.create', ['book' => new Book, 'categories' => $categories, 'authors' => $authors ]);
+        return view('book.create', ['book' => new Book, 'categories' => $categories, 'authors' => $authors ]);
     }
 
     /**
@@ -50,9 +50,9 @@ class BookController extends Controller
         //     'imagefile' => [File::types(['png', 'jpg', 'jpeg'])->max(12 * 1024)],
         //     'image' => ['nullable']
         // ]);
-        $book = $this->repo->create( $request->safe()->except('imagefile') );
+        $book = $this->service->create( $request->safe()->except('imagefile') );
 
-        return redirect()->route("books.index")->with('success', "Book Created Successfully");  
+        return redirect()->route("book.index")->with('success', "Book Created Successfully");  
     }
 
     /**
@@ -60,11 +60,11 @@ class BookController extends Controller
      */
     public function show(int $id)
     {
-        $book = $this->repo->find($id); // Book::find($id);
+        $book = $this->service->find($id); // Book::find($id);
         if (!isset($book)) {
-            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
         }
-        return view ('books.show', ['book' => $book]);
+        return view ('book.show', ['book' => $book]);
     }
 
     /**
@@ -80,7 +80,7 @@ class BookController extends Controller
         if (!isset($book)) {
             return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
         }
-        return view('books.edit',['book' => $book, 'categories' => $categories, 'authors' => $authors]);
+        return view('book.edit',['book' => $book, 'categories' => $categories, 'authors' => $authors]);
     }
 
     /**
@@ -90,7 +90,7 @@ class BookController extends Controller
     {
         $book = Book::find($id);
         if (!isset($book)) {
-            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
         }
 
         // $validated = $request->validate([
@@ -104,9 +104,9 @@ class BookController extends Controller
         // ]);
         // $book->update($validated);
         
-        $this->repo->update($request->validated());
+        $this->service->update($request->validated());
 
-        return redirect()->route("books.show", ["id" => $id])->with('success', "Book Updated Successfully");
+        return redirect()->route("book.show", ["id" => $id])->with('success', "Book Updated Successfully");
     }
 
     /**
@@ -114,13 +114,13 @@ class BookController extends Controller
      */
     public function destroy(int $id)
     {
-        $book = $this->repo->find($id);
+        $book = $this->service->find($id);
         if (!isset($book)) {
-            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
         }
 
         $book->delete();
-        return redirect()->route("books.index")->with('success', "Book Destroyed Successfully");
+        return redirect()->route("book.index")->with('success', "Book Destroyed Successfully");
     }
 
 }

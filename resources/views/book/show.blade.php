@@ -49,7 +49,7 @@
           <x-slot:footer>
             <div class="flex justify-end space-x-5 items-center">
                 <!-- delete confirmation modal -->
-                @include('books._delete') 
+                @include('book._delete') 
           
                 <!-- edit -->
                 <x-ui.link href="{{ route('books.edit',['id'=>$book->id]) }}" class="flex gap-2" > 
@@ -79,7 +79,7 @@
             </x-ui.link>
         </x-slot:title>
  
-        @include('books._reviews')
+        @include('book._reviews')
     </x-ui.card>
 
 </x-layout>

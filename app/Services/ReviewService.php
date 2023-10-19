@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Services;
 
 use App\Models\Book;
 use App\Models\Review;
 
-class ReviewRepository
+class ReviewService
 {
 
-    public function  __construct(private BookRepository $bookRepository)
+    public function  __construct(private BookService $bookService)
     {
-        $this->bookRepository = $bookRepository;
+        $this->bookService = $bookService;
     }
 
     public function paginate(int $pageSize = 10, ?string $search='') //: Collection
@@ -51,7 +51,7 @@ class ReviewRepository
 
     public function add(int $bookId, array $data): ?Review
     {
-        $book = $this->bookRepository->find($bookId);
+        $book = $this->bookService->find($bookId);
         if (!isset($book))
         {
             return null;
@@ -64,7 +64,7 @@ class ReviewRepository
 
     public function addMany(int $bookId, array $data): ?Book
     {
-        $book = $this->bookRepository->find($bookId);
+        $book = $this->bookService->find($bookId);
         if (!isset($book))
         {
             return null;

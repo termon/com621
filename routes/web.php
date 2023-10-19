@@ -50,8 +50,8 @@ Route::middleware(['auth'])->group(function() {
 Route::get("/login",   [UserController::class, "login"])->name("login");
 Route::post("/login",  [UserController::class, "authenticate"])->name("authenticate");
 Route::post("/logout", [UserController::class, "logout"])->name("logout");
-Route::get("/register",[UserController::class, "create"])->name("user.create");
-Route::post("/register",[UserController::class, "store"])->name("user.store");
+Route::get("/register",[UserController::class, "create"])->name("users.create");
+Route::post("/register",[UserController::class, "store"])->name("users.store");
 
 
 //Route::resource('books', BookController::class);
