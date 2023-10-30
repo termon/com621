@@ -2,24 +2,31 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBookRequest extends FormRequest
+class BookStoreRequest extends FormRequest
 {
 
     protected function prepareForValidation(): void
     {
         $file = $this->files->get('imagefile');        
-       
         if ($file) {             
             $image = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file)); 
-            $this->merge(['image' => $image ]);
+            $this->merge(['image' => $image ]); 
         }
     }
+   
     // public function after(): array
+    // { 
+    //     return []; 
+    // }
+
+    // protected function passedValidation(): void 
     // {  
-    //     return [];
+    //     // doesnt work     
+    //     $this->replace(['imagefile' => null, 'title' => Str::lower($this->title)]);  
     // }
 
     /**
@@ -37,14 +44,14 @@ class StoreBookRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+       return [
             'title' => ['required','unique:books'],
             'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
-            'rating' => ['required', 'numeric', 'min:0', 'max:5'],
+            //'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['min:0', 'max:1000'],
             'image' => ['nullable'],
-            'imagefile' => ['nullable', File::types(['png', 'jpg'])->max(12 * 1024),],
+            'imagefile' => ['nullable', File::types(['png', 'jpg'])->max(1024),],
             'authors.*' => ['nullable']
         ];
     }

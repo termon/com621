@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBookRequest extends FormRequest
+class BookUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +27,12 @@ class UpdateBookRequest extends FormRequest
             'id' => ['required'], // as this is an update we require id so it can be used in validating title uniqueness
             'title' => ['required',Rule::unique('books')->ignore($this->id)], // or $this->input('id')
             'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
-            'rating' => ['required', 'numeric', 'min:0', 'max:5'],
+            //'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'category_id' => ['required', 'exists:categories,id'],
             'description' => ['min:0', 'max:1000'],
+            'image' => ['nullable'],
+            'imagefile' => ['nullable', File::types(['png', 'jpg'])->max(12 * 1024),],
+            'authors.*' => ['nullable']
         ];
     }
 }

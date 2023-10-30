@@ -27,7 +27,7 @@
 
         <x-slot:footer>
             @can('delete', $review)
-            <form method="POST" action="{{route('reviews.destroy',['review'=>$review])}}" class="m-0">
+            <form method="POST" action="{{route('reviews.destroy',['id'=>$review->id])}}" class="m-0">
                 @csrf()
                 @method('DELETE')
                 <x-ui.button type="submit" mode="red">Delete</x-ui.button>   

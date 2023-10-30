@@ -21,9 +21,12 @@
         <x-slot:title class="flex justify-between items-center">
             <span>Books</span>
             
-            <x-ui.link href="{{route('books.create')}}" class="flex gap-1">
-                <x-ui.svg.plus/><span>Create</span>
-            </x-ui.link>
+            @can('create', \App\Models\Book::class)
+                <x-ui.link href="{{route('books.create')}}" class="flex gap-1">
+                    <x-ui.svg.plus/><span>Create</span>
+                </x-ui.link>
+            @endcan
+
         </x-slot:title>
       
        

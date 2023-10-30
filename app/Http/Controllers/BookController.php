@@ -7,8 +7,9 @@ use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\BookService;
-use App\Http\Requests\StoreBookRequest;
-use App\Http\Requests\UpdateBookRequest;
+use Illuminate\Validation\Rules\File;
+use App\Http\Requests\BookStoreRequest;
+use App\Http\Requests\BookUpdateRequest;
 
 class BookController extends Controller
 {
@@ -31,6 +32,8 @@ class BookController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Book::class);
+
         $categories = Category::all()->pluck('name', 'id');
         $authors = Author::all()->pluck('name', 'id');
         return view('book.create', ['book' => new Book, 'categories' => $categories, 'authors' => $authors ]);
@@ -39,20 +42,30 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBookRequest $request)
+    public function store(Request $request)  //BookStoreRequest $request)
     {
-        // $book = $request->validate([
-        //     'title' => ['required','unique:books'],
-        //     'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
-        //     'rating' => ['required', 'numeric', 'min:0', 'max:5'],
-        //     'category_id' => ['required', 'exists:categories,id'],
-        //     'description' => ['min:0', 'max:1000'],
-        //     'imagefile' => [File::types(['png', 'jpg', 'jpeg'])->max(12 * 1024)],
-        //     'image' => ['nullable']
-        // ]);
-        $book = $this->service->create( $request->safe()->except('imagefile') );
+        $validated = $request->validate([
+            'title' => ['required','unique:books'],
+            'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
+          
+            'category_id' => ['required', 'exists:categories,id'],
+            'description' => ['min:0', 'max:1000'],            
+            'imagefile' => ['nullable', File::types(['png', 'jpg'])->max(1024),],           
+        ]);
+        $file = $request->files->get('imagefile');        
+        if ($file) {             
+           $image = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file)); 
+           $validated['image'] = $image;
+        }
+        unset($validated['imagefile']); // remove inputfile
+        dd($validated);   
+        $book = Book::create($validated);
 
-        return redirect()->route("book.index")->with('success', "Book Created Successfully");  
+        // StoreBookRequest passedValidation filter sets the image property from file content
+        
+        //$book = $this->service->create( $request->safe()->except('imagefile') );
+
+        return redirect()->route("books.show", ['id' => $book->id])->with('success', "Book Created Successfully");  
     }
 
     /**
@@ -62,7 +75,7 @@ class BookController extends Controller
     {
         $book = $this->service->find($id); // Book::find($id);
         if (!isset($book)) {
-            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
         return view ('book.show', ['book' => $book]);
     }
@@ -78,7 +91,7 @@ class BookController extends Controller
         $authors = Author::all()->pluck('name', 'id');
           
         if (!isset($book)) {
-            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
         return view('book.edit',['book' => $book, 'categories' => $categories, 'authors' => $authors]);
     }
@@ -86,11 +99,11 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBookRequest $request, int $id)
+    public function update(BookUpdateRequest $request, int $id)
     {
         $book = Book::find($id);
         if (!isset($book)) {
-            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
 
         // $validated = $request->validate([
@@ -103,10 +116,17 @@ class BookController extends Controller
         //     'description' => ['min:0', 'max:1000'],
         // ]);
         // $book->update($validated);
-        
-        $this->service->update($request->validated());
+        $file = $request->files->get('imagefile'); 
+      
+        $image = null;       
+        if ($file) {             
+            $image = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file));           
+            $request->merge(['image' => $image ]);
+        }   
+        dd($request->safe());
+        $this->service->update($request->safe()->merge(['image' => $image ])->except('imagefile'));
 
-        return redirect()->route("book.show", ["id" => $id])->with('success', "Book Updated Successfully");
+        return redirect()->route("books.show", ["id" => $id])->with('success', "Book Updated Successfully");
     }
 
     /**
@@ -116,11 +136,11 @@ class BookController extends Controller
     {
         $book = $this->service->find($id);
         if (!isset($book)) {
-            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
 
         $book->delete();
-        return redirect()->route("book.index")->with('success', "Book Destroyed Successfully");
+        return redirect()->route("books.index")->with('success', "Book Destroyed Successfully");
     }
 
 }

@@ -70,7 +70,7 @@ class AuthorBookController extends Controller
         $book = $this->service->removeAuthorFromBook($id, $data['author_id']);
         // shouldn't need to check as post form contained valid book id
         if (!isset($book)) {
-            return redirect()->route('book.index')->with('warning', "Book {$id} does not exist!");
+            return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
         return redirect()->route('books.show', ['id' => $id])->with('success', "Author removed!");
     }

@@ -8,7 +8,7 @@
     <x-ui.card>
         <x-slot:title>Login</x-slot:title>
 
-        <form  method="POST" action="{{ route('authenticate') }}">
+        <form  method="POST" action="{{ route('login') }}">
             @csrf
 
             <x-ui.form.input-group label="Email" name="email" value="{{ old('email', $user->email) }}" class="mb-4" />

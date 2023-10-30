@@ -92,23 +92,24 @@ class BookService
         if (!isset($book)) {
             return null;
         }
+        $data['reviewed_on'] = now();
         $review = $book->reviews()->create($data);
         $book->rating = $book->reviews()->avg('rating');
         $book->save();
         return $review;
     }
 
-    public function deleteReview(int $reviewId): bool
+    public function deleteReview(int $reviewId): ?Book
     {
         $review = Review::with('book')->find($reviewId);
         if (!isset($review)) {
-            return false;
+            return null;
         }
         $book = $review->book;
         $review->delete();
-        $book->rating = $book->reviews()->avg('rating') ?? 0;
+        $book->rating = $book->reviews()->avg('rating') ?? 0;       
         $book->save();
-        return true;
+        return $book;
     }
 
 

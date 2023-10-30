@@ -74,9 +74,14 @@
                 <span>Reviews</span> 
                 <x-ui.badge mode="green">{{$book->reviews->count()}}</x-ui.badge>
             </div>
-            <x-ui.link mode="link" href="{{route('reviews.create', ['id'=>$book->id])}}" class="flex gap-1">
-                <span>Add</span> <x-ui.svg.plus/>
-            </x-ui.link>
+
+            @can('create', App\Models\Review::class)            
+                <x-ui.link class="flex gap-1"
+                           href="{{route('reviews.create', ['id'=>$book->id])}}">
+                    <span>Add</span> <x-ui.svg.plus/>
+                </x-ui.link>
+            @endcan
+
         </x-slot:title>
  
         @include('book._reviews')

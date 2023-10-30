@@ -17,7 +17,7 @@
                 <td class="px-2 py-3">{{$review->reviewed_on_for_humans}}</td>
                 <td class="px-2 py-3">{{$review->short_comment}}</td>
                 <td class="px-2 py-3 text-right flex gap-2 justify-end">
-                     <x-ui.link href="{{route('reviews.show',['review'=>$review])}}" class="flex gap-1">
+                     <x-ui.link href="{{route('reviews.show',['id'=>$review->id])}}" class="flex gap-1">
                         <span>View</span>
                         <x-ui.svg.eye/> 
                     </x-ui.link>                  
