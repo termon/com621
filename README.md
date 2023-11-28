@@ -22,3 +22,7 @@ Cmd K Cmd W   - close all editor windows
 # CSS
 prepend ! operator to ensure it overrides definition in component 
   e.g. !p-0 would override any existing p style in component
+
+## Extensions
+
+Intelphense required @builtin php language features extension to be disabled

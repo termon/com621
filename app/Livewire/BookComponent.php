@@ -4,9 +4,11 @@ namespace App\Livewire;
 
 use App\Models\Book;
 use Livewire\Component;
+use App\Services\BookService;
 use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
 
+use Illuminate\Validation\Rule;
+use App\Livewire\Forms\BookForm;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Collection;
 use App\Repositories\BookRepository;
@@ -15,97 +17,41 @@ use Illuminate\Validation\Rules\File;
 class BookComponent extends Component
 {
     use WithFileUploads;
-
-    public Collection $categories;
-    public Collection $authors;
     
-    public $id;
-    public $title;
-    public $year;
-    public $rating;
-    public $category_id;
-    public $description;
-    public $image;
-    public array $book_authors;
-
-    // file upload
-    public $image_file = null;
-       
-    // #[Computed]
-    // public function image()
-    // {
-    //     if ($this->image_file) {             
-    //         $this->image = 'data:' . $this->image_file->getMimeType() . ';base64,' . base64_encode(file_get_contents($this->image_file->path()));           
-    //     }     
-    // }
-
-    public function updating() {
-        if ($this->image_file) {             
-            $this->image = 'data:' . $this->image_file->getMimeType() . ';base64,' . base64_encode(file_get_contents($this->image_file->path()));                      
-        }
-    }
+    public BookForm $form;
 
     public function mount(?Book $book, Collection $categories, Collection $authors) {
-        $this->categories = $categories;
-        $this->authors = $authors;
-
-        $this->id = $book->id;
-        $this->title = $book->title;
-        $this->year = $book->year;
-        $this->rating = $book->rating;
-        $this->description = $book->description; 
-        $this->category_id = $book->category_id;     
-        $this->book_authors = $book->authors->pluck('id')->toArray();
-        $this->image = $book->image;   
+        $this->form->setFormData($book, $categories, $authors);        
     }
 
-    public function addAuthor()  {       
-        // add invalid book id (0) as placeholder with additional validator 'exists:authors,id'
-        //$this->book_authors = $this->book_authors->push(0);
-        $this->book_authors[] = 0;
+    public function updating() {
+        $this->form->updating();
     }
 
-    public function removeAuthor($id) {       
-        // possibly re-assign book_authors for re-render       
-        //$this->book_authors = $this->book_authors->filter(fn($v, $k) => $v != $id ); //id needs to be key (not position)
-        $key = array_search($id, $this->book_authors);
-        unset($this->book_authors[ $key ]);
+    public function addAuthor() {
+        $this->form->addAuthor();
     }
 
-    public function save(BookRepository $repo) {
-        $this->validate([
-                'title' => ['required',Rule::unique('books')->ignore($this->id)],                
-                'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
-                //'rating' => ['required', 'numeric', 'min:0', 'max:5'],
-                'category_id' => ['required', 'exists:categories,id'],
-                'description' => ['min:0', 'max:1000'],
-                'image' => ['nullable'],
-                'image_file' => ['nullable',File::types('jpeg,png,jpg')->max(10*1024) ], 
-                'book_authors' => ['required','min:1','max:4','array','exists:authors,id'],
-            ], 
-            ['book_authors.*' => 'Please select Author']
-        ); 
+    public function removeAuthor($author_id) {
+        $this->form->removeAuthor($author_id);
+    }
 
-        // if ($this->image_file) {             
-        //     $this->image = 'data:' . $this->image_file->getMimeType() . ';base64,' . base64_encode(file_get_contents($this->image_file->path()));           
-        // }
-       
+    public function save(BookService $service) {
+        $this->form->validate();
+ 
         // id will be 0 for new books
-        if ($this->id == 0) {
-            $book = $repo->create($this->only(['title','rating','year','description','category_id', 'image']));
-            //$book = Book::create($this->only(['title','rating','year','description','category_id', 'image']));
-            //$book->authors()->sync($this->book_authors);          
+        if ($this->form->id == 0) {
+            $book = $service->createBook($this->form->only(['title','rating','year','description','category_id', 'image']));
         } else {
-            $book = $repo->update(['authors' => $this->book_authors, ...$this->only(['id', 'title','rating','year','description','category_id', 'image',])]);
-            //$book = Book::find($this->id);    
-            //$book->update($this->only(['title','rating','year','description','category_id', 'image']));
-            //$book->authors()->sync($this->book_authors);    
-        }
+            dd($this->form);
+            $book = $service->updateBook($this->form->id, ['authors' => $this->form->book_authors, ...$this->form->only(['id', 'title','rating','year','description','category_id', 'image',])]);
+        }       
+
         if ($book === null) {
-            return redirect()->route('book.index')->with('error','Book not updated');    
+            return redirect()->route('books.index')->with('error','Book saving book');    
         }
        
-        return redirect()->route('book.show', ['id'=>$book->id])->with('success','Book updated');
+        return redirect()->route('books.show', ['id'=>$book->id])->with('success','Book updated');
     }
 
     public function render()

@@ -24,8 +24,8 @@
             <x-ui.form.textarea-group label="Comment" name="comment" rows="8" value="{{  old('comment', $review->comment) }}" />
             
             <div class="flex items-center gap-2 mt-2">
-                <x-ui.button mode="dark">Create</x-ui.button>             
-                <x-ui.link mode="light" href="{{ route('books.show',['id' => $review->book_id]) }}">Cancel</x-ui.link>
+                <x-ui.button variant="dark">Create</x-ui.button>             
+                <x-ui.link variant="light" href="{{ route('books.show',['id' => $review->book_id]) }}">Cancel</x-ui.link>
             </div>
                 
         </form>

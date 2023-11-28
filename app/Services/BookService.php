@@ -4,16 +4,13 @@ namespace App\Services;
 
 use App\Models\Book;
 use App\Models\Author;
-
 use App\Models\Review;
-use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class BookService
 {
 
-    public function create(array $data): ?Book
-    {      
+    public function createBook(array $data): ?Book
+    {    
         $book = Book::create(collect($data)->except('authors')->toArray());
         if (isset($data['authors']))
         {
@@ -22,40 +19,19 @@ class BookService
         return $book;
     }
     
-    public function all(?string $search='') : Collection
+    public function searchBooks(?string $search='') //: \Illuminate\Database\Eloquent\Builder 
     {
-        // if ($search == null || $search === '') {
-        //     return Book::all();
-        // } else {
-        //     return Book::where('title', 'like',  "%{$search}%")
-        //            ->orWhere('author','like',  "%{$search}%")
-        //            ->orWhere('description','like',  "%{$search}%");# code...
-        // }
-        return match($search) {
-            '', null => Book::all(),    // Book::with(['category'])->get(), // use when Book $with property not set 
-            default  => Book::where('title', 'like',  "%{$search}%")
-                            ->orWhere('author','like',  "%{$search}%")
-                            ->orWhere('description','like',  "%{$search}%")
-        };
+        return Book::with(['category'])->search($search);
     }
 
-
-    public function paginate(int $pageSize = 10, ?string $search=null) : LengthAwarePaginator
-    {
-        return match($search) {
-            '',null => Book::paginate($pageSize),
-            default => Book::search($search)->paginate($pageSize), 
-        };
-    }
-
-    public function find(int $id): ?Book
+    public function findBook(int $id): ?Book
     {
         return Book::with(['reviews','reviews.user'])->find($id);
     }
 
-    public function delete(int $id): bool
+    public function deleteBook(int $id): bool
     {
-        $book = $this->find($id);
+        $book = $this->findBook($id);
         if ($book) {
             $book->delete();
             return true;
@@ -63,7 +39,7 @@ class BookService
         return false;
     }
 
-    public function deleteAll(): void
+    public function deleteAllBooks(): void
     {
         $books = Book::all();
         foreach($books as $book) {
@@ -71,9 +47,9 @@ class BookService
         }
     }
 
-    public function update(array $updated): ?Book
+    public function updateBook(int $id, array $updated): ?Book
     {
-        $book = $this->find($updated['id'] ?? 0);
+        $book = $this->findBook($id);
         if ($book) {
             $book->update(collect($updated)->except('id','authors')->toArray());
             //$book->update(collect($updated)->only('title','year','rating','description','image','category_id')->toArray());
@@ -86,9 +62,16 @@ class BookService
         return null;
     }
 
-    public function addReview(int $bookId, array $data): ?Review
+    // ===================== Review Management =========================
+
+    public function findReview(int $reviewId): ?Review
     {
-        $book = $this->find($bookId);
+        return Review::with('book')->find($reviewId);
+    }
+
+    public function addReviewToBook(int $bookId, array $data): ?Review
+    {
+        $book = $this->findBook($bookId);
         if (!isset($book)) {
             return null;
         }
@@ -99,9 +82,9 @@ class BookService
         return $review;
     }
 
-    public function deleteReview(int $reviewId): ?Book
+    public function deleteReviewFromBook(int $reviewId): ?Book
     {
-        $review = Review::with('book')->find($reviewId);
+        $review = $this->findReview($reviewId);
         if (!isset($review)) {
             return null;
         }
@@ -112,10 +95,11 @@ class BookService
         return $book;
     }
 
-
+    // =============== BookAuthor Mangement ===========================
+    
     public function addAuthorToBook(int $book_id, int $author_id) 
     {
-        $book = $this->find($book_id);
+        $book = $this->findBook($book_id);
         $author = Author::find($author_id);
 
         if (isset($book) && isset($author)) {
@@ -139,7 +123,7 @@ class BookService
     }
     public function removeAuthorFromBook(int $book_id, int $author_id) 
     {
-        $book = $this->find($book_id);       
+        $book = $this->findBook($book_id);       
         $author = Author::find($author_id);
        
         if (isset($book) && isset($author)) {
@@ -154,17 +138,6 @@ class BookService
             return $book;
         }
         return null;
-    }
-
-    public function getAuthorSelectList(?Book $book = null) 
-    {      
-        if ($book) {
-            // make list of authors not currently associated with book 
-            return Author::all()->diff($book->authors)->pluck('name','id');
-        }
-        // make list of all authors 
-        return Author::all()->pluck('name','id');
-        
     }
 
 }

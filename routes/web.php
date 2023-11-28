@@ -1,13 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookServiceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReviewServiceController;
 use App\Http\Controllers\AuthorBookController;
 
-use App\Models\Review;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,20 +25,26 @@ Route::get('/hello/{name}/{age?}', function(string $name, ?int $age=null) {
     return "Hello " .  $name . " aged " . ($age ?? 'unknown');
 })->where('age', '[0-9]+');;
 
+
+Route::get('/practical/{question}', function(int $question=1) {
+    $items = ['mon', 'tue', 'wed'];    
+    return view('home.practical', [ 'question' => $question, 'items' => $items]);
+});
+
+
 Route::middleware(['auth'])->group(function() {
-    Route::get("/books/create",    [BookController::class, "create"])->name("books.create"); 
-    Route::post("/books",          [BookController::class, "store"])->name("books.store"); 
-    Route::get("/books",           [BookController::class, 'index'])->name("books.index");
-    Route::get("/books/{id}/edit", [BookController::class, "edit"])->name("books.edit");
-    Route::put("/books/{id}",      [BookController::class, "update"])->name("books.update");
-    Route::get("/books/{id}",      [BookController::class, "show"])->name("books.show");
-    Route::delete("/books/{id}",   [BookController::class, "destroy"])->name("books.destroy");
-    Route::post("/books",          [BookController::class, "store"])->name("books.store");     
+    Route::get("/books/create",    [BookServiceController::class, "create"])->name("books.create"); 
+    Route::post("/books",          [BookServiceController::class, "store"])->name("books.store"); 
+    Route::get("/books",           [BookServiceController::class, 'index'])->name("books.index");
+    Route::get("/books/{id}/edit", [BookServiceController::class, "edit"])->name("books.edit");
+    Route::put("/books/{id}",      [BookServiceController::class, "update"])->name("books.update");
+    Route::get("/books/{id}",      [BookServiceController::class, "show"])->name("books.show");
+    Route::delete("/books/{id}",   [BookServiceController::class, "destroy"])->name("books.destroy");  
    
-    Route::get("/reviews/create/{id}", [ReviewController::class, "create"])->name("reviews.create");//->can('create', Review::class); 
-    Route::post("/reviews",            [ReviewController::class, "store"])->name("reviews.store")->can('create', Review::class);  
-    Route::get("/reviews/{id}",        [ReviewController::class, "show"])->name("reviews.show"); 
-    Route::delete("/reviews/{id}",     [ReviewController::class, "destroy"])->name("reviews.destroy")->can('delete', App\Models\Review::class);
+    Route::get("/reviews/create/{id}", [ReviewServiceController::class, "create"])->name("reviews.create");
+    Route::post("/reviews",            [ReviewServiceController::class, "store"])->name("reviews.store");
+    Route::get("/reviews/{id}",        [ReviewServiceController::class, "show"])->name("reviews.show"); 
+    Route::delete("/reviews/{id}",     [ReviewServiceController::class, "destroy"])->name("reviews.destroy");
     
     Route::get("/authorbooks/{id}/create",    [AuthorBookController::class, "create"])->name("authorbooks.create");
     Route::post("/authorbooks/{id}",          [AuthorBookController::class, "store"])->name("authorbooks.store");

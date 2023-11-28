@@ -16,7 +16,7 @@
              </div>
 
             <div class="flex items-center gap-2 mb-4">
-                <x-ui.button mode="dark">Add</x-ui.button>             
+                <x-ui.button  variant="dark">Add</x-ui.button>             
                 <x-ui.link href="{{ route('books.show',['id' => $book->id]) }}">Cancel</x-ui.link>
             </div>
                 

@@ -13,8 +13,8 @@
         </h2>
 
         <div class="mt-6 flex justify-end">
-            <x-ui.link mode="light" x-on:click="$dispatch('close')">Cancel</x-ui.link>
-            <x-ui.button class="ml-3" mode="red">Delete</x-ui.button>
+            <x-ui.link variant="light" x-on:click="$dispatch('close')">Cancel</x-ui.link>
+            <x-ui.button class="ml-3" variant="red">Delete</x-ui.button>
         </div>
     </form>
 </x-ui.modal>

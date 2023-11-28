@@ -20,7 +20,7 @@ class AuthorBookController extends Controller
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
         // make list of authors not currently associated with book 
-        $authors = $this->service->getAuthorSelectList($book); 
+        $authors = $book->getAddAuthorSelectList(); 
 
         return view('authorbook.create', ['book' => $book, 'authors' => $authors]);
     }
@@ -52,7 +52,7 @@ class AuthorBookController extends Controller
         if (!isset($book)) {
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
-        $authors = $book->authors->pluck('name', 'id')->all();
+        $authors = $book->getRemoveAuthorSelectList(); //$book->authors->pluck('name', 'id')->all();
         return view('authorbook.delete', ['book' => $book, 'authors' => $authors]);
     }
 

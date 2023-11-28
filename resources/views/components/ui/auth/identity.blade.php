@@ -1,8 +1,8 @@
 @auth
-    <form method="post" action="{{ route('logout') }}" class="flex gap-2 items-center">
+    <form method="post" action="{{ route('logout') }}" class="flex gap-2 p-0 m-0">
         @csrf
-        <x-ui.button type="submit" mode="none" class="text-gray-700 hover:text-gray-900">Logout</x-ui.button>
-        <div class="text-sm text-gray-400">({{ auth()?->user()?->email }} - {{ auth()?->user()?->role}})</div> 
+        <x-ui.button  variant="none" >Logout</x-ui.button>
+        <div class="py-1.5 text-gray-400 text-xs">{{ auth()?->user()?->email }} ({{ auth()?->user()?->role}})</div> 
     </form>
 @endauth 
 @guest

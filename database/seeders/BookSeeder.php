@@ -20,9 +20,9 @@ class BookSeeder extends Seeder
         $u1 = User::factory()->create(['name' =>'User One', 'email' => 'user1@mail.com']);
         $u2 = User::factory()->create(['name' =>'User Two', 'email' => 'user2@mail.com']);
 
-        $a1 = Author::create(['name' => 'J .Bloggs' ]);
-        $a2 = Author::create(['name' => 'A .Dummy' ]);
-        $a3 = Author::create(['name' => 'P. DeCartes' ]);
+        $a1 = Author::create(['name' => 'J .Bloggs', 'email' => 'bloggs@mail1.com' ]);
+        $a2 = Author::create(['name' => 'A .Dummy', 'email' => 'dummy@mail2.com' ]);
+        $a3 = Author::create(['name' => 'P. DeCartes', 'email' => 'decartes@mail3.com' ]);
         $authors = Author::factory()->count(5)->create();
 
         $c1 = Category::create(['name' => "Fiction"]);

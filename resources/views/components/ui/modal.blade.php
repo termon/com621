@@ -48,6 +48,7 @@
     class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
     style="display: {{ $show ? 'block' : 'none' }};"
 >
+    <!-- backdrop container -->
     <div
         x-show="show"
         class="fixed inset-0 transform transition-all"
@@ -59,9 +60,11 @@
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
     >
+        <!-- backdrop -->
         <div class="absolute inset-0 bg-gray-200 dark:bg-gray-900 opacity-75"></div>
     </div>
-
+    
+    <!-- modal container -->
     <div
         x-show="show"
         class="p-6 m-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"
@@ -72,6 +75,7 @@
         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
     >
+        <!-- x close modal button -->
         <button @click="show=false" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -85,6 +89,7 @@
             </div>
         @endif
 
+        <!-- modal content -->
         {{ $slot }}
 
     </div>

@@ -6,17 +6,17 @@
        
     <x-ui.card>
         <x-slot:title>Create Book</x-slot:title>
-        <form  method="post" action="{{ route('books.store') }}" enctype="multipart/form-data">
+        {{-- <form  method="post" action="{{ route('books.store') }}" enctype="multipart/form-data">
             @csrf
         
             @include("book._inputs")
         
             <div class="flex-1 items-center">
-                <x-ui.button mode="dark">Create</x-ui.button>             
-                <x-ui.link mode="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
+                <x-ui.button  variant="dark">Create</x-ui.button>             
+                <x-ui.link variant="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
             </div>    
-        </form>
-        {{-- <livewire:book-component :categories="$categories" :authors="$authors" />      --}}
+        </form> --}}
+        <livewire:book-component :categories="$categories" :authors="$authors" />
     </x-ui.card>
 
 </x-layout>

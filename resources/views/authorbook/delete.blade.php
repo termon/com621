@@ -16,8 +16,8 @@
              </div>
 
             <div class="flex items-center gap-2 mb-4">
-                <x-ui.button mode="dark">Remove</x-ui.button>             
-                <x-ui.link mode="light" href="{{ route('books.show',['id' => $book->id]) }}">Cancel</x-ui.link>
+                <x-ui.button  variant="dark">Remove</x-ui.button>             
+                <x-ui.link variant="light" href="{{ route('books.show',['id' => $book->id]) }}">Cancel</x-ui.link>
             </div>
                 
         </form>

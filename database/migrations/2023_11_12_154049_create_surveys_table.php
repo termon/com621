@@ -11,7 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('surveys', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->required(); 
+            $table->integer('rating')->required();
+            $table->string('comment');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('surveys');
     }
 };

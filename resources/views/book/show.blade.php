@@ -32,7 +32,7 @@
                     @endforelse
                 </div>
                 
-                <x-ui.badge mode="pink">{{$book->rating}}</x-ui.badge>
+                <x-ui.badge variant="pink">{{$book->rating}}</x-ui.badge>
             </div>
 
             <div class="text-blue-800 font-bold">{{$book->year}}</div>
@@ -41,27 +41,34 @@
         <div class="mt-4 text-gray-600 flex justify-between">
             <p class="">{{$book->description}}</p>
             @if($book->image)
-                <img src="{{$book->image}}" class="w-96">
-            @endif
+                <img src="{{$book->image}}  " class="w-96">
+                {{-- <img src="{{Storage::url($book->image)}}" class="w-96"> --}}
+            @endif     
+            {{-- <img src="{{$book->getFirstMediaUrl('public')}}" class="w-96">  --}}
         </div>
 
           <!-- actions -->
           <x-slot:footer>
-            <div class="flex justify-end space-x-5 items-center">
+            <div class="flex flex-wrap justify-end space-x-5 items-center">
                 <!-- delete confirmation modal -->
                 @include('book._delete') 
           
                 <!-- edit -->
-                <x-ui.link href="{{ route('books.edit',['id'=>$book->id]) }}" class="flex gap-2" > 
-                    <span>Edit</span><x-ui.svg.edit class=""></x-ui.svg.edit>
+                <x-ui.link href="{{ route('books.edit',['id'=>$book->id]) }}" class="flex gap-1" > 
+                    <x-ui.svg.edit><span>Edit</span></x-ui.svg.edit>
                 </x-ui.link>
-                <x-ui.link href="{{ route('authorbooks.create',['id'=>$book->id]) }}" class="flex gap-2" > 
-                    <span>Add Author</span><x-ui.svg.plus></x-ui.svg.plus>
+
+                <!-- nav links to separate authorbook management pages -->
+                {{-- <x-ui.link href="{{ route('authorbooks.create',['id'=>$book->id]) }}" class="flex gap-1" > 
+                    <x-ui.svg.plus><span>Add Author</span></x-ui.svg.plus>
                 </x-ui.link>
-                <x-ui.link href="{{ route('authorbooks.delete',['id'=>$book->id]) }}" class="flex gap-2" > 
-                    <span>Remove Author</span><x-ui.svg.trash></x-ui.svg.trash>
-                </x-ui.link>
-             
+                <x-ui.link href="{{ route('authorbooks.delete',['id'=>$book->id]) }}" class="flex gap-1" > 
+                    <x-ui.svg.trash><span>Remove Author</span></x-ui.svg.trash>
+                </x-ui.link> --}}
+
+                <!-- modals displaying authorbook management forms -->
+                @include('authorbook._create')
+                @include('authorbook._delete') 
                 
             </div>
         </x-slot:footer>
@@ -72,7 +79,7 @@
         <x-slot:title class="flex gap-2 items-center justify-between">
             <div class="flex gap-2 items-center">
                 <span>Reviews</span> 
-                <x-ui.badge mode="green">{{$book->reviews->count()}}</x-ui.badge>
+                <x-ui.badge variant="green">{{$book->reviews->count()}}</x-ui.badge>
             </div>
 
             @can('create', App\Models\Review::class)            

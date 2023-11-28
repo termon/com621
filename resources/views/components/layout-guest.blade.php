@@ -10,7 +10,7 @@
     <!-- Display flash message -->
     <x-ui.flash />
 
-    <main class="container mx-auto py-5 px-5 flex-grow overflow-y-scroll">
+    <main class="container mx-auto py-5 px-5 flex-grow ">
       {{ $slot }}
     </main>
   

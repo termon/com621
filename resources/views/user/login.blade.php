@@ -15,8 +15,8 @@
             <x-ui.form.input-group label="Password" name="password" value="{{ old('password', $user->password) }}" type="password" class="mb-4" />
 
             <div class="flex items-center gap-2 mt-2">
-                <x-ui.button mode="dark">Login</x-ui.button>             
-                <x-ui.link mode="light" href="/">Cancel</x-ui.link>
+                <x-ui.button  variant="dark">Login</x-ui.button>             
+                <x-ui.link variant="light" href="/">Cancel</x-ui.link>
             </div>
                 
         </form>

@@ -5,6 +5,6 @@
             {{$attributes['label']}}
         </x-ui.form.label>        
     @endisset
-    <x-ui.form.input {{ $attributes->merge(['type' => 'text'])->except(['class', 'label']) }} /> 
+    <x-ui.form.input {{ $attributes->except(['class', 'label']) }} /> 
     <x-ui.form.error name="{{$attributes['name']}}" class="mt-2"/>  
 </div>

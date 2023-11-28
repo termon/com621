@@ -1,6 +1,8 @@
 <li>
-    <a {{$attributes->merge(['class'=>'block hover:bg-gray-200 whitespace-no-wrap py-2 px-4'])}}">
-        {{ $slot }}
+    <a {{$attributes->merge(['class'=>'transition-colors duration-300 block hover:bg-gray-100 whitespace-no-wrap py-2 px-4'])}}">
+        <div class="flex gap-2">
+            {{ $slot }}
+        </div>
     </a>    
 </li>
       

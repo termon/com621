@@ -10,6 +10,7 @@ use Illuminate\Auth\Access\Response;
 class BookPolicy
 {
 
+    // Short-Circuits other policy methods if user is an ADMIN
     public function before(User $user, string $ability): bool|null
     {
         return ($user->role == Role::ADMIN) ? true : null;        
@@ -19,16 +20,16 @@ class BookPolicy
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
-    {
+    {   
         return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Book $book): bool
+    public function view(User $user): bool //, Book $book): bool
     {
-        return true;
+        return false; // true;
     }
 
     /**
@@ -42,9 +43,9 @@ class BookPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Book $book): bool
+    public function update(User $user) //, Book $book): bool
     {
-        return true;
+        return $user->role == Role::AUTHOR;
     }
 
     /**

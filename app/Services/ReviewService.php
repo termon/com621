@@ -4,16 +4,14 @@ namespace App\Services;
 
 use App\Models\Book;
 use App\Models\Review;
+use App\Data\ReviewData;
 
 class ReviewService
 {
 
-    public function  __construct(private BookService $bookService)
-    {
-        $this->bookService = $bookService;
-    }
+    public function  __construct(private BookService $bookService) {}
 
-    public function paginate(int $pageSize = 10, ?string $search='') //: Collection
+    public function searchReviews(int $pageSize = 10, ?string $search='') //: Collection
     {
         if ($search != '')
         {
@@ -24,47 +22,37 @@ class ReviewService
         return Review::paginate($pageSize);
     }
 
-    public function create(array $data): ?Review
+    public function updateReview(ReviewData $updated): ?Review
     {
-        return Review::create($data);
-    }
-
-    public function update(array $updated): ?Review
-    {
-        $review = $this->find($updated['id']);
+        $review = $this->findReview($updated->id);
         if (!isset($review)) {
             return null;
         }
-        $review->update($updated);
+        $review->update($updated->toArray());
         return $review;
     }
 
-    public function find(int $reviewId): ?Review
+    public function findReview(int $reviewId): ?Review
     {
         return Review::with('book')->find($reviewId);
     }
 
-    public function findOrFail(int $reviewId): ?Review
+    public function addReview(int $bookId, ReviewData $data): ?Review
     {
-        return Review::with('book')->findOrFail($reviewId);
-    }
-
-    public function add(int $bookId, array $data): ?Review
-    {
-        $book = $this->bookService->find($bookId);
+        $book = $this->bookService->findBook($bookId);
         if (!isset($book))
         {
             return null;
-        }
-        $review = $book->reviews()->create($data);
+        }       
+        $review = $book->reviews()->create($data->toArray());
         $book->rating = $book->reviews()->avg('rating');
         $book->save();
         return $review;
     }
 
-    public function addMany(int $bookId, array $data): ?Book
+    public function addManyReviews(int $bookId, array $data): ?Book
     {
-        $book = $this->bookService->find($bookId);
+        $book = $this->bookService->findBook($bookId);
         if (!isset($book))
         {
             return null;
@@ -75,9 +63,9 @@ class ReviewService
         return $book;
     }
 
-    public function delete(int $reviewId): bool
+    public function deleteReview(int $reviewId): ?Book
     {
-        $review = $this->find($reviewId);
+        $review = $this->findReview($reviewId);
         if (!isset($review))
         {
             return false;
@@ -86,7 +74,7 @@ class ReviewService
         $review->delete();
         $book->rating = $book->reviews()->avg('rating') ?? 0;
         $book->save();
-        return true;
+        return $book;
     }
 
 }

@@ -30,7 +30,7 @@
             <form method="POST" action="{{route('reviews.destroy',['id'=>$review->id])}}" class="m-0">
                 @csrf()
                 @method('DELETE')
-                <x-ui.button type="submit" mode="red">Delete</x-ui.button>   
+                <x-ui.button  variant="red">Delete</x-ui.button>   
             </form>
             @endcan()
         </x-slot:footer>

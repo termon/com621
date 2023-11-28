@@ -2,38 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Review;
 use Illuminate\Http\Request;
-use App\Services\BookService;
-use App\Services\ReviewService;
-use Illuminate\Support\Facades\Gate;
-
 
 class ReviewController extends Controller
 {
-    public function __construct(private BookService $service) {}
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-    }
 
     /**
      * Show the form for creating a new review for specified book.
      * DI will auto-create a new Review model for population
      */
-    public function create($id, Review $review, Request $request) { 
+    public function create($id, Review $review) { 
 
+        // when you want to control authorisation failure response
         // if (auth()->user()->cannot('create', Review::class)) {
         // if ($request->user()->cannot('create', Review::class)) {
         //    return redirect()->back()->with('warning', 'Not authorised'); 
         //}
         
+        // authorise action - display 404 when unauthorised
         $this->authorize('create', Review::class);
        
-        $book = $this->service->find($id);
+        $book = Book::find($id);
         if (!isset($book)) {
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
@@ -48,17 +39,18 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->authorize('create');
+        $this->authorize('create', Review::class);
 
         //$request->merge(['reviewed_on' => now()]);
-        $review = $request->validate([
+        $validated = $request->validate([
             'book_id' => ['required'],
             'user_id' => ['required'],           
             'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'comment' => ['required','min:5', 'max:1000'],            
         ]);
     
-        $review = $this->service->addReview($review['book_id'], $review);  
+        $book = Book::find($request['book_id']);
+        $review = $book->reviews()->create($validated);  
              
         return redirect()->route("books.show", ['id'=>$review->book_id])
                          ->with('success', "Review Created Successfully");
@@ -79,32 +71,17 @@ class ReviewController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(int $id)
-    {
-       
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update($request, int $id)
-    {
-       
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(int $id)
     {
-        //$book = $this->service->deleteReview($id);
-
         $review = Review::find($id);
         if (!$review) {
             return redirect()->route("books.index" )->with('error', "Review Not Found");
         }
+
+        $this->authorize('delete', $review);
+
         $book = $review->book;
         $review->delete();
         return redirect()->route("books.show", ['id'=>$book->id])

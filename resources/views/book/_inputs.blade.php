@@ -34,8 +34,12 @@
 <x-ui.form.textarea-group label="Description" name="description" rows="8" value="{{ old('description',$book->description) }}" class="mb-4"/>
 
 <div class="flex justify-between">
-    <x-ui.form.input-file-group label="Image" name="imagefile" value="{{ old('imagefile') }}" class="mb-4"/>
+    <x-ui.form.input-file-group label="Image" name="image" value="{{ old('image') }}" class="mb-4"/>
     @if($book->image)
         <img src="{{$book->image}}" class="w-64">
+        {{-- <img src="{{Storage::url($book->image)}}" class="w-64"> --}}
     @endif
+    {{-- @if($book->getFirstMediaUrl('public'))
+        <img src="{{$book->getFirstMediaUrl('public')}}" class="w-96">
+    @endif --}}
 </div>

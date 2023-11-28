@@ -9,25 +9,27 @@ use Illuminate\Foundation\Http\FormRequest;
 class BookStoreRequest extends FormRequest
 {
 
-    protected function prepareForValidation(): void
-    {
-        $file = $this->files->get('imagefile');        
-        if ($file) {             
-            $image = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file)); 
-            $this->merge(['image' => $image ]); 
-        }
+    protected function passedValidation(): void 
+    {     
+        if ($this->hasFile('image')) { 
+            $file = $this->image;
+            $image = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file));
+            //$this->validator->setData([...$this->validator->getData(), 'image' => $image]);  // works 
+            $this->validator->setValue('image', $image);  // works 
+        } 
     }
-   
-    // public function after(): array
-    // { 
-    //     return []; 
+
+    // public function validated($key=null, $value=null): array
+    // {
+    //     if ($this->hasFile('image')) { 
+    //         $file = $this->image;
+    //         $image = 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file)); 
+            
+    //         //return array_merge(parent::validated(), ['image' => $image]);     
+    //     }         
+    //     return parent::validated();
     // }
 
-    // protected function passedValidation(): void 
-    // {  
-    //     // doesnt work     
-    //     $this->replace(['imagefile' => null, 'title' => Str::lower($this->title)]);  
-    // }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -49,9 +51,8 @@ class BookStoreRequest extends FormRequest
             'year' => ['required', 'numeric', 'min:2000', 'max:2024'],
             //'rating' => ['required', 'numeric', 'min:0', 'max:5'],
             'category_id' => ['required', 'exists:categories,id'],
-            'description' => ['min:0', 'max:1000'],
-            'image' => ['nullable'],
-            'imagefile' => ['nullable', File::types(['png', 'jpg'])->max(1024),],
+            'description' => ['min:0', 'max:1000'],           
+            'image' => ['nullable', File::types(['png', 'jpg'])->max(1024),],
             'authors.*' => ['nullable']
         ];
     }

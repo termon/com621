@@ -2,15 +2,14 @@
     @csrf
 
     <div class="p-3  rounded-lg">               
-        <input name="id" type="hidden" wire:model='id'>
+        <input name="form.id" type="hidden" wire:model='form.id'>
 
-        <x-ui.form.input-group label="Title" name="title" value="" wire:model='title' class="mb-4"/>
+        <x-ui.form.input-group label="Title" name="form.title" wire:model='form.title' class="mb-4"/>
        
         <div class="flex flex-row gap-4 mb-4">  
             <!-- use flex-1 or w-full to make div take up available space or use grid grid-cols-2 gap-2 or wrapping div -->
-            <x-ui.form.input-group label="Year" name="year" value="" wire:model='year' class="flex-1"/>
-            {{-- <x-ui.form.input-group label="Rating" name="rating" type="number" step="0.1" value="" wire:model='rating' class="flex-1 "/> --}}
-            <x-ui.form.select-group label="Category" name="category_id"  value="{{$category_id}}" :options="$categories"  wire:model="category_id" class="flex-1"/>
+            <x-ui.form.input-group label="Year" name="form.year" wire:model='form.year' class="flex-1"/>
+            <x-ui.form.select-group label="Category" name="form.category_id"  value="{{$form->category_id}}" :options="$form->categories"  wire:model="form.category_id" class="flex-1"/>
         </div>
          
         <div class="flex justify-between items-center" >  
@@ -21,33 +20,32 @@
         </div>
 
          <div class="flex gap-1 items-center border rounded p-3 mb-4">
-            @foreach($book_authors as $i => $id)                
+            @foreach($form->book_authors as $i => $id)                
                 <div class="flex gap-1">  
-                    <x-ui.form.select-group :options="$this->authors" name="authors.{{$i}}" wire:model='book_authors.{{$i}}' class="mb-0"/> 
-                    <x-ui.button type="button" mode="link" wire:click="removeAuthor({{$id}})"><x-ui.svg.trash/></x-ui.button>
+                    <x-ui.form.select-group :options="$this->form->authors" name="form.authors.{{$i}}" wire:model='form.book_authors.{{$i}}' class="mb-0"/> 
+                    <x-ui.button type="button" variant="link" wire:click.prevent="removeAuthor({{$id}})"><x-ui.svg.trash/></x-ui.button>
                 </div>
             @endforeach
             {{-- display general book-authors error - min/max authors --}}
-            <x-ui.form.error name="book_authors" />
+            <x-ui.form.error name="form.book_authors" />
         </div>
 
-        <x-ui.form.textarea-group label="Description" name="description" rows="8" value="" wire:model='description' class="mb-4"/>
+        <x-ui.form.textarea-group label="Description" name="form.description" rows="8" value="" wire:model='form.description' class="mb-4"/>
         
         <div class="flex justify-between mb-4">
-            <x-ui.form.input-file-group label="Image" name="image_file" wire:model="image_file" />
-            @if ($image_file) 
-                <img src="{{ $image_file->temporaryUrl() }}" class="w-64">
-            @elseif ($image)
-                <img src="{{$image}}" class="w-64">
+            <x-ui.form.input-file-group label="Image" name="form.image_file" wire:model="form.image_file" />
+            @if ($form->image_file) 
+                <img src="{{ $form->image_file->temporaryUrl() }}" class="w-64">
+            @elseif ($form->image)
+                <img src="{{$form->image}}" class="w-64">
             @endif
         </div>
 
         <div class="flex-1 items-center">
-            <x-ui.button mode="dark">Save</x-ui.button>             
-            <x-ui.link mode="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
+            <x-ui.button variant="dark">Save</x-ui.button>             
+            <x-ui.link variant="light" href="{{ route('books.index') }}">Cancel</x-ui.link>
         </div>
     </div>
     
 </form>
-
 

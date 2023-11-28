@@ -10,10 +10,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Book extends Model
+class Book extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     public $guarded = [ 'id' ];
 
@@ -27,6 +29,21 @@ class Book extends Model
         );
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('public')->singleFile();
+    }
+    
+    // make list of authors not associated with book 
+    public function getAddAuthorSelectList(): array {        
+        return Author::all()->diff($this->authors)->pluck('name','id')->all();
+    }
+
+    // make select list of authors associated with book
+    public function getRemoveAuthorSelectList(): array {
+        return $this->authors->pluck('name', 'id')->all();
+    }
+    
     // relationships
     public function reviews() : HasMany {
         return $this->hasMany(Review::class)->orderBy('reviewed_on', 'desc');
@@ -58,14 +75,29 @@ class Book extends Model
 
     // model search scope
     public function scopeSearch($query, $value) {
-        return match($value) {
-            $value => $query                            
-                ->where('title', 'like',  "%{$value}%")
-                ->orWhere('author','like',  "%{$value}%")
-                ->orWhere('description','like',  "%{$value}%")
-                ->orWhereHas('category', fn ($q) => $q->where('name', 'like', "%{$value}%")),
-            default => $query
-        };        
+        if ($value) {
+            return $query->where('title', 'like', "%{$value}%")
+                ->orWhere('description','like', "%{$value}%")
+                ->orWhere('year','like', "%{$value}%")
+                ->orWhereHas('category', fn ($q) => 
+                    $q->where('name', 'like', "%{$value}%"))
+                ->orWhereHas('authors', fn($q) =>
+                    $q->where('name', 'like', "%{$value}%")
+                    ->orWhere('email', 'like', "%{$value}%"));
+        }
+        return $query; 
+          
+        // return match($value) {
+        //     '',null => $query,
+        //     default => $query                            
+        //         ->where('title', 'like',  "%{$value}%")
+        //         ->orWhere('description','like',  "%{$value}%")
+        //         ->orWhere('year','like',  "%{$value}%")
+        //         ->orWhereHas('category', fn ($q) => $q->where('name', 'like', "%{$value}%"))
+        //         ->orWhereHas('authors', fn($q) =>$q->where('name', 'like', "%{$value}%")
+        //                                            ->orWhere('email', 'like', "%{$value}%")
+        //         )
+        // };        
     }
 
 }
