@@ -15,7 +15,7 @@ class AuthorBookController extends Controller
      */
     public function create($id )
     {       
-        $book = $this->service->find($id);
+        $book = $this->service->findBook($id);
         if (!isset($book)) {
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
@@ -48,7 +48,7 @@ class AuthorBookController extends Controller
      */
     public function delete(int $id)
     {
-        $book = $this->service->find($id);
+        $book = $this->service->findBook($id);
         if (!isset($book)) {
             return redirect()->route('books.index')->with('warning', "Book {$id} does not exist!");
         }
