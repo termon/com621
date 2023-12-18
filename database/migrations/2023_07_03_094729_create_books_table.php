@@ -21,7 +21,8 @@ return new class extends Migration
             $table->longtext('description')->nullable();
             $table->longText('image')->nullable();
             $table->foreignId('category_id')->constrained();
-            $table->timestamps();
+            $table->timestamps(); 
+            $table->softDeletes();
         });
     }
 
