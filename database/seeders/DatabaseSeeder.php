@@ -42,5 +42,7 @@ class DatabaseSeeder extends Seeder
             // UserSeeder::class
         ]);
 
+        //https://laraveldaily.com/post/laravel-belongstomany-seed-data-factories
+
     }
 }

@@ -78,10 +78,10 @@ class BookForm extends Form
         return ['book_authors.*' => 'Please select Author']; 
     }
 
-    public function validationAttributes() 
-    {
-        return [
-            'title' => 'form.title',
-        ];
-    }
+    // public function validationAttributes() 
+    // {
+    //     return [
+    //         'title' => 'form.title',
+    //     ];
+    // }
 }

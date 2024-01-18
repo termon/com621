@@ -1,11 +1,12 @@
 <?php
 
+use App\Models\Review;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookServiceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ReviewServiceController;
 use App\Http\Controllers\AuthorBookController;
+use App\Http\Controllers\BookServiceController;
+use App\Http\Controllers\ReviewServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,14 @@ Route::get('/practical/{question}', function(int $question=1) {
     return view('home.practical', [ 'question' => $question, 'items' => $items]);
 });
 
+Route::get('/test', function() {
+    $poor = Review::with('book')->where("rating", 0)->get();
+    $result = "";
+    foreach($poor as $p) {
+        $result .= " {$p->book->title} ";
+    } 
+    return $result;
+});
 
 Route::middleware(['auth'])->group(function() {
     Route::get("/books/create",    [BookServiceController::class, "create"])->name("books.create"); 
